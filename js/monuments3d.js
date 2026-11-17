@@ -434,6 +434,10 @@ export function coucheMonuments(D, { exag = EXAG } = {}) {
       soleil.shadow.camera.updateProjectionMatrix(); soleil.target.updateMatrixWorld();
       camera.projectionMatrix = new THREE.Matrix4().fromArray(matrice).multiply(placementCarte);
       rendu.resetState();
+      // la zone de dessin suit la taille réelle de la carte : three.js garde sinon celle du premier affichage,
+      // et tout redimensionnement (fenêtre, rotation, barre d'adresse du téléphone qui se replie) décalait,
+      // déformait ou faisait disparaître les bâtiments
+      rendu.setViewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
       rendu.render(scene, camera);
     },
   };
