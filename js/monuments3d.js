@@ -14,7 +14,7 @@ const EXAG = 1.6; // hauteurs exagérées, comme sur une maquette
 // décalait les bâtiments d'environ 0,7 % de leur distance au centre, soit près de 20 m aux bassins à flot,
 // un écart qui devenait visible en zoomant)
 const MERC0 = maplibregl.MercatorCoordinate.fromLngLat(ORIGINE, 0), ECHELLE = MERC0.meterInMercatorCoordinateUnits();
-const loc = (p) => { const m = maplibregl.MercatorCoordinate.fromLngLat(p, 0); return new THREE.Vector2((m.x - MERC0.x) / ECHELLE, (MERC0.y - m.y) / ECHELLE); };
+export const loc = (p) => { const m = maplibregl.MercatorCoordinate.fromLngLat(p, 0); return new THREE.Vector2((m.x - MERC0.x) / ECHELLE, (MERC0.y - m.y) / ECHELLE); };
 const anneauLocal = (a) => { const r = a.map(loc); if (r.length > 1 && r[0].distanceTo(r[r.length - 1]) < 0.01) r.pop(); return r; };
 
 // ---------- matériaux ----------
@@ -414,6 +414,8 @@ export function coucheMonuments(D, { exag = EXAG } = {}) {
   let rendu = null, carte = null;
   return {
     id: 'monuments-3d', type: 'custom', renderingMode: '3d',
+    // objets ajoutés après coup (les noms gravés, dessinés une fois les polices chargées)
+    ajouterALaScene(o) { scene.add(o); carte?.triggerRepaint(); },
     onAdd(map, gl) {
       carte = map;
       rendu = new THREE.WebGLRenderer({ canvas: map.getCanvas(), context: gl, antialias: true });

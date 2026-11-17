@@ -56,6 +56,8 @@ export function habiller(map, fond, batis, options = {}) {
   map.addLayer({ id: 'halos', type: 'line', source: 'halos',
     paint: { 'line-color': ['match', ['get', 'cat'], 'musee', COUL.musee, 'shopping', COUL.shopping, 'famille', COUL.famille, 'hotel', COUL.hotel, COUL.repere], 'line-width': decal(7), 'line-blur': decal(5), 'line-opacity': 0.55 } });
   // les maquettes en 3D, avec leurs ombres
-  map.addLayer(coucheMonuments(batis, options));
+  const couche = coucheMonuments(batis, options);
+  map.addLayer(couche);
+  return couche;
 
 }

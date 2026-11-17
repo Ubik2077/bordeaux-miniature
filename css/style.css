@@ -59,9 +59,6 @@ body {
 .repere.hotel .nom::before { content: 'H'; display: inline-block; margin-right: 6px; padding: 0 4px; border: 1px solid rgba(255,255,255,.8); font-size: 12px; }
 @media (max-width: 520px) { .repere .nom { max-width: 118px; padding: 2px 6px 2px 5px; font-size: 12px; } }
 
-.etiquette { pointer-events: none; white-space: nowrap; font-family: var(--titre); color: rgba(47, 42, 36, .7); text-transform: uppercase; }
-.etiquette.quartier { font-size: 13px; font-weight: 700; letter-spacing: .32em; text-shadow: 0 0 3px rgba(244, 235, 215, .9); }
-.etiquette.fleuve { font-size: 24px; font-style: italic; font-weight: 600; letter-spacing: .45em; color: rgba(30, 70, 95, .62); }
 
 .maplibregl-ctrl-attrib { background: rgba(244, 235, 215, .8) !important; }
 .chargement { position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; background: var(--papier);

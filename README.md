@@ -14,7 +14,8 @@ Refonte de « Canelé Quest » (version 8 bits), dont elle reprend les données 
   moderne, bunker, halle, serre, Cité du Vin ; monuments dessinés pièce par pièce (Grand Théâtre, pont de pierre,
   Girondins, colonnes rostrales, porte Cailhau, tour Pey-Berland, Grands Hommes, miroir d'eau).
 - Nom de chaque lieu sur une étiquette placée là où il y a de la place (jamais cachée, trait de rappel si besoin),
-  médaillon photo en aperçu au survol, noms de quartiers écrits sur la carte,
+  médaillon photo en aperçu au survol, noms des quartiers et de la Garonne gravés dans le papier (`js/gravures.js` :
+  lettres d'imprimeur IM Fell English posées à la main, à plat et en mètres réels, elles grandissent avec le zoom),
   cartouche du titre, rose des vents qui tourne avec la vue. Rotation à deux doigts.
 
 ## Données

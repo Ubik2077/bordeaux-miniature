@@ -1,6 +1,7 @@
 // Bordeaux Miniature : la carte de papier (MapLibre), les maquettes en 3D (js/monuments3d.js) et les médaillons des lieux.
 
 import { habiller, COUL } from './fond-carte.js';
+import { graver } from './gravures.js';
 import { chargerVacances, statut } from './horaires.js';
 import { afficherFiche, fermerFiche, badgeStatut, puce, echap } from './fiche.js';
 import { LANGS, t, tLieu, setLang, getLang, applyStatic } from './i18n.js';
@@ -27,24 +28,14 @@ window.carteBM = map; // accès depuis la console, pour les essais
 map.on('error', (e) => console.error('carte :', e.error || e));
 
 map.on('load', () => {
-  habiller(map, fond, batis);
+  const couche3d = habiller(map, fond, batis);
 
-  // noms écrits sur la carte : les quartiers restent à l'horizontale, le fleuve suit son cours quand on tourne
-  const ecrits = [];
-  const ecrire = (txt, cls, p, angle = null) => {
-    const el = document.createElement('div'); el.className = 'etiquette ' + cls; el.textContent = txt;
-    new maplibregl.Marker({ element: el, rotationAlignment: 'viewport', pitchAlignment: 'viewport' }).setLngLat(p).addTo(map);
-    ecrits.push({ el, angle });
-  };
-  ecrire('La Garonne', 'fleuve', [-0.5632, 44.8445], -86);
-  for (const [t, p] of [['Saint-Pierre', [-0.5728, 44.8398]], ["Triangle d'or", [-0.5772, 44.8452]], ['Quinconces', [-0.5728, 44.8442]], ['La Bastide', [-0.5605, 44.8415]],
-    ['Chartrons', [-0.5710, 44.8510]], ['Saint-Michel', [-0.5660, 44.8335]], ['Bassins à flot', [-0.5560, 44.8650]], ['Mériadeck', [-0.5850, 44.8385]], ['Belcier', [-0.5520, 44.8262]], ['Bacalan', [-0.5520, 44.8700]]]) ecrire(t, 'quartier', p);
-  const majEcrits = () => {
-    const b = map.getBearing();
-    for (const e of ecrits) if (e.angle !== null) e.el.style.transform = `rotate(${e.angle - b}deg)`;
-    $('rose').querySelector('svg').style.transform = `rotate(${-b}deg)`;
-  };
-  map.on('rotate', majEcrits); majEcrits();
+  // noms des quartiers et de la Garonne gravés dans le papier (js/gravures.js), dès que leurs polices sont là
+  graver().then((g) => couche3d.ajouterALaScene(g)).catch((e) => console.error('gravures :', e));
+
+  // rose des vents : tourne avec la carte
+  const majRose = () => { $('rose').querySelector('svg').style.transform = `rotate(${-map.getBearing()}deg)`; };
+  map.on('rotate', majRose); majRose();
   $('rose').addEventListener('click', () => map.easeTo({ bearing: 0, duration: 600 }));
 
   // ---------- repères des lieux : un point au sol et le nom sur une étiquette ----------

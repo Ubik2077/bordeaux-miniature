@@ -3,10 +3,10 @@
 // au fur et à mesure qu'on les ouvre. Pages, scripts et données : réseau d'abord, cache sinon.
 // Images et polices : cache d'abord. Changer VERSION pour forcer le nettoyage, et ajouter tout
 // nouveau fichier à COEUR.
-const VERSION = 'bm-2';
+const VERSION = 'bm-3';
 const COEUR = [
   './', 'index.html', 'manifest.webmanifest', 'css/style.css', 'css/polices.css',
-  'js/carte.js', 'js/fond-carte.js', 'js/compact.js', 'js/monuments3d.js', 'js/fiche.js', 'js/horaires.js', 'js/i18n.js',
+  'js/carte.js', 'js/fond-carte.js', 'js/gravures.js', 'js/compact.js', 'js/monuments3d.js', 'js/fiche.js', 'js/horaires.js', 'js/i18n.js',
   'js/lang/en.js', 'js/lang/es.js', 'js/lang/it.js', 'js/lang/de.js',
   'vendor/maplibre-gl.js', 'vendor/maplibre-gl.css', 'vendor/three.module.min.js',
   'data/carte/fond.json', 'data/carte/batis.json', 'data/lieux.json', 'data/photos.json', 'data/vacances.json', 'data/trajets.json',
