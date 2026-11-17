@@ -15,7 +15,7 @@ body {
 .feuille { position: fixed; inset: calc(8px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom)); overflow: hidden;
   background: #86b8cf; box-shadow: 0 2px 0 rgba(255,255,255,.25) inset, 0 14px 30px rgba(20, 10, 0, .55), 0 2px 6px rgba(20, 10, 0, .4); }
 @media (min-width: 760px) { .feuille { inset: 22px; } }
-#carte { position: absolute; inset: 0; }
+#carte { position: absolute; inset: 0; z-index: 0; } /* les étiquettes des lieux restent sous les boutons et panneaux */
 .lumiere { position: absolute; inset: 0; pointer-events: none; z-index: 2; mix-blend-mode: soft-light;
   background: radial-gradient(110% 75% at 0% 0%, rgba(255, 205, 130, .22), transparent 55%), radial-gradient(90% 60% at 100% 100%, rgba(40, 25, 60, .14), transparent 60%); }
 .flou { position: absolute; left: 0; right: 0; height: 16%; pointer-events: none; z-index: 2; backdrop-filter: blur(2.2px); -webkit-backdrop-filter: blur(2.2px); }
@@ -36,19 +36,28 @@ body {
   filter: drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
 .rose svg { width: 100%; height: 100%; transition: transform .1s linear; }
 
-/* médaillons photo des lieux ; « replie » : un simple point quand la place manque */
-.medaillon { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
-.medaillon .rond { width: 58px; height: 58px; border-radius: 50%; background: #ddd center / cover; border: 3px solid #fff;
-  box-shadow: 0 0 0 2.5px var(--c), 0 7px 14px rgba(30, 20, 5, .45); transition: transform .15s; }
-.medaillon:hover .rond, .medaillon.choisi .rond { transform: scale(1.1); }
-.medaillon .nom { margin-top: 5px; padding: 2px 8px; max-width: 140px; text-align: center; background: rgba(246, 238, 220, .96); border: 1px solid var(--filet);
-  font: 700 13.5px/1.1 var(--titre); color: var(--encre); box-shadow: 0 2px 5px rgba(40, 25, 10, .2); }
-.medaillon .tige { width: 2px; height: 22px; background: linear-gradient(var(--c), rgba(0,0,0,.35)); }
-.medaillon .pied { width: 11px; height: 11px; border-radius: 50%; background: var(--c); border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.45); }
-.medaillon.replie .rond, .medaillon.replie .nom { display: none; }
-.medaillon.replie .tige { height: 9px; }
-.medaillon.replie .pied { width: 15px; height: 15px; }
-.medaillon.hotel .rond { display: flex; align-items: center; justify-content: center; background: var(--hotel); color: #fff; font: 700 26px/1 var(--titre); }
+/* repères des lieux : point au sol, étiquette du nom placée là où il y a de la place, trait de rappel */
+.repere { position: relative; width: 0; height: 0; cursor: pointer; }
+.repere .pied { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; border-radius: 50%; background: var(--c);
+  border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.45); }
+.repere .trait { position: absolute; left: 0; top: -0.75px; height: 1.5px; transform-origin: 0 50%; background: var(--c); opacity: .85; }
+.repere .nom { position: absolute; left: 0; top: 0; width: max-content; max-width: 150px; padding: 3px 8px 3px 7px; text-align: left;
+  background: rgba(248, 242, 228, .97); border: 1px solid var(--filet); border-left: 3px solid var(--c); border-radius: 2px;
+  font: 700 13.5px/1.1 var(--titre); color: var(--encre); box-shadow: 0 2px 6px rgba(40, 25, 10, .25); cursor: pointer; }
+.repere .nom:hover { background: #fffaf0; }
+.repere:hover, .repere:focus-within { z-index: 2000 !important; }
+.repere.dehors { visibility: hidden; }
+/* aperçu au survol : le médaillon photo, au-dessus de l'étiquette (dessous si elle est en haut de l'écran) */
+.repere .apercu { position: absolute; left: 50%; bottom: calc(100% + 10px); width: 104px; height: 104px; border-radius: 50%;
+  background: #ddd center / cover; border: 3px solid #fff; box-shadow: 0 0 0 2.5px var(--c), 0 10px 22px rgba(30, 20, 5, .45);
+  opacity: 0; transform: translateX(-50%) scale(.5); transform-origin: 50% 100%; transition: opacity .15s, transform .18s; pointer-events: none; }
+.repere.apercu-bas .apercu { bottom: auto; top: calc(100% + 10px); transform-origin: 50% 0; }
+.repere .nom:hover .apercu, .repere .nom:focus-visible .apercu { opacity: 1; transform: translateX(-50%) scale(1); }
+@media (hover: none) { .repere .apercu { display: none; } }
+.repere.hotel .pied { width: 16px; height: 16px; left: -8px; top: -8px; }
+.repere.hotel .nom { background: var(--hotel); color: #fff; border-color: var(--hotel); }
+.repere.hotel .nom::before { content: 'H'; display: inline-block; margin-right: 6px; padding: 0 4px; border: 1px solid rgba(255,255,255,.8); font-size: 12px; }
+@media (max-width: 520px) { .repere .nom { max-width: 118px; padding: 2px 6px 2px 5px; font-size: 12px; } }
 
 .etiquette { pointer-events: none; white-space: nowrap; font-family: var(--titre); color: rgba(47, 42, 36, .7); text-transform: uppercase; }
 .etiquette.quartier { font-size: 13px; font-weight: 700; letter-spacing: .32em; text-shadow: 0 0 3px rgba(244, 235, 215, .9); }
@@ -150,9 +159,11 @@ body.fiche-ouverte .cartouche { display: none; }
 .liste-lieux .etat { grid-area: etat; font: 600 10.5px/1 var(--texte); padding: 4px 7px; border-radius: 20px; border: 1px solid transparent; }
 .liste-lieux .temps { grid-area: temps; font-size: 12px; color: var(--encre-douce); }
 
-/* médaillon d'un lieu fermé : photo ternie */
-.medaillon.dort .rond { filter: grayscale(.85) brightness(.95); opacity: .85; }
-.medaillon.choisi .rond { transform: scale(1.15); box-shadow: 0 0 0 3.5px var(--c), 0 0 0 7px rgba(255,255,255,.7), 0 9px 18px rgba(30, 20, 5, .5); }
+/* lieu fermé : étiquette ternie ; lieu choisi : étiquette à l'encre */
+.repere.dort .nom { color: var(--encre-douce); background: rgba(236, 229, 214, .95); font-style: italic; }
+.repere.dort .pied { filter: grayscale(.6); }
+.repere.choisi .nom { background: var(--encre); color: var(--papier-clair); border-color: var(--encre); border-left-color: var(--c); font-style: normal; }
+.repere.choisi .pied { transform: scale(1.3); }
 
 /* barre du trajet affiché */
 .barre-trajet {

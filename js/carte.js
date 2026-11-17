@@ -47,42 +47,92 @@ map.on('load', () => {
   map.on('rotate', majEcrits); majEcrits();
   $('rose').addEventListener('click', () => map.easeTo({ bearing: 0, duration: 600 }));
 
-  // ---------- médaillons : les 24 lieux et l'hôtel (priorité : hôtel, musées, famille, shopping) ----------
+  // ---------- repères des lieux : un point au sol et le nom sur une étiquette ----------
+  // Aucune étiquette n'est cachée : chacune cherche, autour de son point, la première place libre
+  // (au-dessus, en biais, à côté, dessous, puis un peu plus loin avec un trait de rappel) ;
+  // priorité au lieu choisi, puis à l'hôtel, aux musées, à la famille et au shopping.
   const ORDRE = { hotel: -1, musee: 0, famille: 1, shopping: 2 };
-  const medaillons = new Map(); // id → { l, el, m, rang }
+  const medaillons = new Map(); // id → { l, el, nom, trait, m, rang, w, h, pose }
   const actives = new Set(['musee', 'famille', 'shopping']);
   const visible = (l) => !l.categories || l.categories.some((c) => actives.has(c));
-  const poser = (id, l, cat, html) => {
+  const poser = (id, l, cat, nom) => {
     const el = document.createElement('div');
-    el.className = 'medaillon' + (cat === 'hotel' ? ' hotel' : ''); el.style.setProperty('--c', COUL[cat]);
-    el.innerHTML = html;
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (el.classList.contains('replie')) { map.easeTo({ center: [l.lon, l.lat], zoom: Math.min(map.getZoom() + 1.2, 18.5), duration: 500 }); return; }
-      if (cat === 'hotel') return;
-      ouvrir(id);
-    });
-    const m = new maplibregl.Marker({ element: el, anchor: 'bottom', rotationAlignment: 'viewport', pitchAlignment: 'viewport' }).setLngLat([l.lon, l.lat]).addTo(map);
-    medaillons.set(id, { l, el, m, rang: ORDRE[cat] });
+    el.className = 'repere' + (cat === 'hotel' ? ' hotel' : ''); el.style.setProperty('--c', COUL[cat]);
+    el.innerHTML = `<div class="trait"></div><div class="pied"></div><button class="nom" type="button"><span class="texte"></span></button>`;
+    el.querySelector('.texte').textContent = nom;
+    // au survol du nom, le médaillon photo du lieu en aperçu
+    const ph = photos[id];
+    if (ph) el.querySelector('.nom').insertAdjacentHTML('afterbegin', `<span class="apercu" aria-hidden="true" style="background-image:url('${ph.mini}')"></span>`);
+    el.addEventListener('click', (e) => { e.stopPropagation(); if (cat !== 'hotel') ouvrir(id); });
+    const m = new maplibregl.Marker({ element: el, anchor: 'center', rotationAlignment: 'viewport', pitchAlignment: 'viewport' }).setLngLat([l.lon, l.lat]).addTo(map);
+    medaillons.set(id, { l, el, nom: el.querySelector('.nom'), trait: el.querySelector('.trait'), m, rang: ORDRE[cat], w: 0, h: 0, pose: '' });
   };
-  poser('hotel', hotel, 'hotel', `<div class="rond">H</div><div class="nom" data-i18n="hotel.nom">${t('hotel.nom')}</div><div class="tige"></div><div class="pied"></div>`);
-  for (const l of lieux) {
-    const ph = photos[l.id];
-    poser(l.id, l, l.categories[0], `<div class="rond" style="background-image:url('${ph ? ph.mini : ''}')"></div><div class="nom">${echap(tLieu(l, 'nom').replace(/ \(.*\)$/, ''))}</div><div class="tige"></div><div class="pied"></div>`);
+  poser('hotel', hotel, 'hotel', t('hotel.nom'));
+  for (const l of lieux) poser(l.id, l, l.categories[0], tLieu(l, 'nom').replace(/ \(.*\)$/, ''));
+
+  // places candidates [dx, dy, côté] : le point d'accroche de l'étiquette, relatif au point du lieu
+  // de près à loin, et dans chaque cercle de préférence au-dessus, puis en biais, à côté, dessous
+  const PLACES = [];
+  for (const r of [22, 48, 80, 118, 160]) {
+    for (const a of [-90, -45, -135, -20, -160, 0, 180, -68, -112, 30, 150, 90, 60, 120]) {
+      const c = Math.cos((a * Math.PI) / 180), s = Math.sin((a * Math.PI) / 180);
+      const cote = Math.abs(c) < 0.4 ? (s < 0 ? 'haut' : 'bas') : (c > 0 ? 'droite' : 'gauche');
+      PLACES.push([Math.round(r * c), Math.round(r * s), cote]);
+    }
   }
+  const boiteDe = (p, [dx, dy, cote], w, h) => {
+    const x = p.x + dx, y = p.y + dy;
+    if (cote === 'haut') return [x - w / 2, y - h, x + w / 2, y];
+    if (cote === 'bas') return [x - w / 2, y, x + w / 2, y + h];
+    if (cote === 'droite') return [x, y - h / 2, x + w, y + h / 2];
+    return [x - w, y - h / 2, x, y + h / 2];
+  };
+  const recouvre = (a, b) => Math.max(0, Math.min(a[2], b[2]) - Math.max(a[0], b[0])) * Math.max(0, Math.min(a[3], b[3]) - Math.max(a[1], b[1]));
   const parRang = [...medaillons.values()].sort((a, b) => a.rang - b.rang);
   let attente = 0;
   function placer() {
     attente = 0;
-    const poses = [];
-    for (const md of parRang) {
-      if (md.el.hidden) continue;
-      const p = map.project(md.m.getLngLat());
-      const boite = [p.x - 44, p.y - 124, p.x + 44, p.y - 28];
-      const libre = md.el.classList.contains('choisi') || !poses.some((q) => boite[0] < q[2] && boite[2] > q[0] && boite[1] < q[3] && boite[3] > q[1]);
-      md.el.classList.toggle('replie', !libre);
-      if (libre) poses.push(boite);
+    const ecran = map.getContainer().getBoundingClientRect(), marge = 8;
+    const vus = parRang.filter((md) => !md.el.hidden);
+    // le lieu choisi passe en premier, et au-dessus des autres
+    vus.sort((a, b) => (b.el.classList.contains('choisi') - a.el.classList.contains('choisi')) || a.rang - b.rang);
+    for (const md of vus) if (!md.w) { md.w = md.nom.offsetWidth; md.h = md.nom.offsetHeight; }
+    const pts = new Map(vus.map((md) => [md, map.project(md.m.getLngLat())]));
+    // un lieu hors de l'écran n'a pas besoin de son étiquette : elle prendrait la place des autres en débordant
+    for (const [md, p] of pts) {
+      const dehors = p.x < -4 || p.y < -4 || p.x > ecran.width + 4 || p.y > ecran.height + 4;
+      md.el.classList.toggle('dehors', dehors);
+      if (dehors) { pts.delete(md); vus.splice(vus.indexOf(md), 1); }
     }
+    const prises = [...pts.values()].map((p) => [p.x - 7, p.y - 7, p.x + 7, p.y + 7]); // les points des lieux restent visibles
+    // boutons et cartouche posés sur la carte : les étiquettes les évitent
+    for (const el of document.querySelectorAll('.outils > *, .langue > button, .cartouche, .geo, .rose')) {
+      const r = el.getBoundingClientRect();
+      if (r.width) prises.push([r.left - ecran.left - 4, r.top - ecran.top - 4, r.right - ecran.left + 4, r.bottom - ecran.top + 4]);
+    }
+    vus.forEach((md, i) => {
+      const p = pts.get(md);
+      let meilleure = null, cout = Infinity;
+      for (const [j, pl] of PLACES.entries()) {
+        const b = boiteDe(p, pl, md.w + 4, md.h + 4);
+        let c = j * 0.5;                                                         // préférence pour les places proches
+        for (const q of prises) c += recouvre(b, q);
+        c += 4 * (Math.max(0, marge - b[0]) + Math.max(0, b[2] - ecran.width + marge)) * md.h; // hors de l'écran
+        c += 4 * (Math.max(0, marge - b[1]) + Math.max(0, b[3] - ecran.height + marge)) * md.w;
+        if (c < cout) { cout = c; meilleure = { pl, b }; }
+        if (c === j * 0.5) break;                                                // place libre : on la prend
+      }
+      prises.push(meilleure.b);
+      md.el.classList.toggle('apercu-bas', meilleure.b[1] < 130);              // pas la place au-dessus : aperçu dessous
+      const [dx, dy, cote] = meilleure.pl, cle = `${dx},${dy},${cote}`;
+      md.el.style.zIndex = md.el.classList.contains('choisi') ? 1000 : 100 - i;
+      if (cle === md.pose) return;
+      md.pose = cle;
+      const tx = { haut: '-50%', bas: '-50%', droite: '0', gauche: '-100%' }[cote], ty = { haut: '-100%', bas: '0', droite: '-50%', gauche: '-50%' }[cote];
+      md.nom.style.transform = `translate(${dx}px, ${dy}px) translate(${tx}, ${ty})`;
+      const long = Math.hypot(dx, dy);
+      Object.assign(md.trait.style, { width: `${long}px`, transform: `rotate(${Math.atan2(dy, dx)}rad)` });
+    });
   }
   map.on('move', () => { if (!attente) attente = requestAnimationFrame(placer); });
   // un lieu fermé « dort » : médaillon terni (recalculé chaque minute)
@@ -290,8 +340,8 @@ map.on('load', () => {
     applyStatic();
     majBoutonLangue();
     for (const [id, md] of medaillons) {
-      const nom = md.el.querySelector('.nom');
-      nom.textContent = id === 'hotel' ? t('hotel.nom') : tLieu(md.l, 'nom').replace(/ \(.*\)$/, '');
+      md.nom.querySelector('.texte').textContent = id === 'hotel' ? t('hotel.nom') : tLieu(md.l, 'nom').replace(/ \(.*\)$/, '');
+      md.w = 0; md.pose = '';                                  // la taille de l'étiquette change avec la langue
     }
     if (pointIci) pointIci.getElement().title = t('geo.ici');
     if (!$('liste').hidden) remplirListe();

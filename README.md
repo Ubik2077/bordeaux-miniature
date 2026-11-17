@@ -13,7 +13,8 @@ Refonte de « Canelé Quest » (version 8 bits), dont elle reprend les données 
   (soleil de fin d'après-midi au sud-ouest) : styles classique (pierre, fenêtres, toit à la Mansart, lucarnes),
   moderne, bunker, halle, serre, Cité du Vin ; monuments dessinés pièce par pièce (Grand Théâtre, pont de pierre,
   Girondins, colonnes rostrales, porte Cailhau, tour Pey-Berland, Grands Hommes, miroir d'eau).
-- Médaillons photo des lieux (repliés en simple point quand la place manque), noms écrits sur la carte,
+- Nom de chaque lieu sur une étiquette placée là où il y a de la place (jamais cachée, trait de rappel si besoin),
+  médaillon photo en aperçu au survol, noms de quartiers écrits sur la carte,
   cartouche du titre, rose des vents qui tourne avec la vue. Rotation à deux doigts.
 
 ## Données
