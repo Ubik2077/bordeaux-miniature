@@ -2,7 +2,7 @@
 // Jardin public…); generic words are translated (museum, market, shopping centre…).
 export default {
   ui: {
-    'doc.titre': 'Canelé Quest · Bordeaux for families',
+    'doc.titre': 'Bordeaux Miniature · museums, families, shopping',
     'langue.titre': 'Change language',
     'inventaire.aria': 'Categories',
     'cats.musee': 'Museums', 'cats.famille': 'Family', 'cats.shopping': 'Shopping', 'cats.liste': 'List',
@@ -10,6 +10,7 @@ export default {
     'carte.aria': 'Pixel map of Bordeaux',
     'credits': 'Base map: IGN BD TOPO, © OpenStreetMap',
     'hotel': 'HOTEL',
+    'hotel.nom': "Your hotel",
     'pied.defaut': 'Tap a marker',
     'liste.titre': 'Places',
     'liste.aide': 'From nearest to furthest from the hotel, on foot.',

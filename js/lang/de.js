@@ -2,7 +2,7 @@
 // allgemeine Wörter werden übersetzt (Museum, Markt, Einkaufszentrum…).
 export default {
   ui: {
-    'doc.titre': 'Canelé Quest · Bordeaux mit der Familie',
+    'doc.titre': 'Bordeaux Miniature · Museen, Familien, Shopping',
     'langue.titre': 'Sprache ändern',
     'inventaire.aria': 'Kategorien',
     'cats.musee': 'Museen', 'cats.famille': 'Familie', 'cats.shopping': 'Shopping', 'cats.liste': 'Liste',
@@ -10,6 +10,7 @@ export default {
     'carte.aria': 'Pixelkarte von Bordeaux',
     'credits': 'Karte: IGN BD TOPO, © OpenStreetMap',
     'hotel': 'HOTEL',
+    'hotel.nom': "Ihr Hotel",
     'pied.defaut': 'Tippen Sie auf eine Markierung',
     'liste.titre': 'Die Orte',
     'liste.aide': 'Vom nächsten zum entferntesten, zu Fuß vom Hotel.',

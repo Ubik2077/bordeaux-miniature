@@ -26,7 +26,24 @@
       <text x="50" y="7" text-anchor="middle" font-family="Cormorant Garamond, serif" font-weight="700" font-size="12" fill="#2f2a24">N</text>
     </svg>
   </button>
-  <div class="bulle" id="bulle" hidden></div>
+  <nav class="outils" aria-label="Catégories" data-i18n-aria="inventaire.aria">
+    <button id="bouton-liste" class="etiquette-papier" aria-expanded="false" aria-controls="liste"><span class="ico">☰</span><span data-i18n="cats.liste">Liste</span></button>
+    <button class="etiquette-papier" data-cat="musee" aria-pressed="true" style="--c:#8c2342"><i></i><span data-i18n="cats.musee">Musées</span></button>
+    <button class="etiquette-papier" data-cat="famille" aria-pressed="true" style="--c:#4f8a46"><i></i><span data-i18n="cats.famille">Famille</span></button>
+    <button class="etiquette-papier" data-cat="shopping" aria-pressed="true" style="--c:#d9772f"><i></i><span data-i18n="cats.shopping">Shopping</span></button>
+  </nav>
+  <aside id="liste" class="panneau panneau-liste" aria-labelledby="liste-titre" hidden>
+    <button id="liste-fermer" class="fermer" aria-label="Fermer la liste" data-i18n-aria="liste.fermer">✕</button>
+    <h2 id="liste-titre" data-i18n="liste.titre">Les lieux</h2>
+    <p class="aide" data-i18n="liste.aide">Du plus proche au plus loin de l'hôtel, à pied.</p>
+    <ul id="liste-lieux" class="liste-lieux"></ul>
+  </aside>
+  <aside id="fiche" class="panneau panneau-fiche" role="dialog" aria-labelledby="fiche-titre" hidden>
+    <button id="fiche-fermer" class="fermer" aria-label="Fermer la fiche" data-i18n-aria="fiche.fermer">✕</button>
+    <figure id="fiche-photo" class="photo"></figure>
+    <div id="fiche-corps" class="corps"></div>
+  </aside>
+  <div id="barre-trajet" class="barre-trajet" hidden></div>
   <div class="chargement" id="chargement">Bordeaux se dessine…</div>
 </div>
 <script src="vendor/maplibre-gl.js"></script>

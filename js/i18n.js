@@ -13,7 +13,7 @@ export const LANGS = [
 ];
 
 const FR = {
-  'doc.titre': 'Canelé Quest · Bordeaux en famille',
+  'doc.titre': 'Bordeaux Miniature · musées, familles, shopping',
   'langue.titre': 'Changer de langue',
   'inventaire.aria': 'Catégories',
   'cats.musee': 'Musées', 'cats.famille': 'Famille', 'cats.shopping': 'Shopping', 'cats.liste': 'Liste',
@@ -21,6 +21,7 @@ const FR = {
   'carte.aria': 'Carte en pixels de Bordeaux',
   'credits': 'Fond : IGN BD TOPO, © OpenStreetMap',
   'hotel': 'HÔTEL',
+  'hotel.nom': 'Votre hôtel',
   'pied.defaut': 'Touchez un repère',
 
   'liste.titre': 'Les lieux',
@@ -92,7 +93,7 @@ const FR = {
   'duree.a': 'à',
 };
 
-const CLE = 'cq.lang';
+const CLE = 'bm.lang';
 const CODES = LANGS.map((l) => l.code);
 const charges = { fr: { ui: FR } };
 

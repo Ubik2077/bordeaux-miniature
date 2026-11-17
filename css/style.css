@@ -54,12 +54,113 @@ body {
 .etiquette.quartier { font-size: 13px; font-weight: 700; letter-spacing: .32em; text-shadow: 0 0 3px rgba(244, 235, 215, .9); }
 .etiquette.fleuve { font-size: 24px; font-style: italic; font-weight: 600; letter-spacing: .45em; color: rgba(30, 70, 95, .62); }
 
-.bulle { position: absolute; z-index: 4; left: 50%; transform: translateX(-50%); top: 10px; width: min(92%, 380px); padding: 12px 14px;
-  background: rgba(250, 245, 234, .97); border: 1px solid var(--filet); box-shadow: 0 8px 24px rgba(40, 25, 10, .3); font-size: 14px; line-height: 1.4; }
-.bulle b { display: block; font: 700 21px/1.1 var(--titre); margin-bottom: 4px; }
-.bulle[hidden] { display: none; }
 .maplibregl-ctrl-attrib { background: rgba(244, 235, 215, .8) !important; }
 .chargement { position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; background: var(--papier);
   font: italic 600 22px var(--titre); color: var(--encre-douce); transition: opacity .6s; }
 .chargement.fini { opacity: 0; pointer-events: none; }
 @media (max-width: 520px) { .cartouche { max-width: 220px; padding: 8px 11px; } .cartouche h1 { font-size: 25px; } .cartouche h1 span { font-size: 13px; } }
+
+/* ---------- outils : liste et filtres, comme des étiquettes de papier ---------- */
+.outils { position: absolute; z-index: 3; left: 10px; top: 10px; right: 10px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.etiquette-papier {
+  pointer-events: auto; display: inline-flex; align-items: center; gap: 7px; padding: 7px 12px 7px 10px; border: 1px solid var(--filet);
+  background: rgba(246, 238, 220, .95); color: var(--encre); font: 600 13px/1 var(--texte); cursor: pointer;
+  box-shadow: 0 3px 8px rgba(40, 25, 10, .22); border-radius: 2px;
+}
+.etiquette-papier i { width: 11px; height: 11px; border-radius: 50%; background: var(--c); border: 2px solid #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.25); }
+.etiquette-papier[aria-pressed="false"] { opacity: .55; }
+.etiquette-papier[aria-pressed="false"] i { background: #d8cdb6; }
+.etiquette-papier[aria-expanded="true"] { background: var(--encre); color: var(--papier-clair); }
+.etiquette-papier .ico { font-size: 15px; }
+
+/* ---------- panneaux : fiche et liste, feuilles de papier posées sur la carte ---------- */
+.panneau {
+  position: absolute; z-index: 4; overflow-y: auto; overscroll-behavior: contain; background: var(--papier-clair);
+  border: 1px solid var(--filet); box-shadow: 0 12px 30px rgba(30, 18, 5, .4);
+}
+.panneau::before { content: ''; position: absolute; inset: 4px; border: 1px solid rgba(140, 110, 70, .3); pointer-events: none; }
+.panneau[hidden] { display: none; }
+.panneau-fiche { left: 8px; right: 8px; bottom: 8px; max-height: 62%; }
+.panneau-liste { left: 8px; right: 8px; top: 56px; bottom: 8px; padding: 16px 18px; }
+@media (min-width: 760px) {
+  .panneau-fiche { left: auto; right: 14px; top: 14px; bottom: 14px; width: 390px; max-height: none; }
+  .panneau-liste { right: auto; width: 360px; top: 60px; bottom: 14px; left: 14px; }
+}
+body.fiche-ouverte .cartouche { display: none; }
+@media (min-width: 760px) { body.fiche-ouverte .cartouche { display: block; } body.fiche-ouverte .rose { right: 420px; } }
+.fermer {
+  position: sticky; top: 8px; float: right; z-index: 2; margin: 8px 8px -44px 0; width: 36px; height: 36px; border-radius: 50%;
+  border: 1px solid var(--filet); background: rgba(250, 245, 234, .95); color: var(--encre); font-size: 16px; cursor: pointer;
+  box-shadow: 0 2px 6px rgba(40, 25, 10, .25);
+}
+.panneau h2 { margin: 0 0 4px; font: 700 26px/1.05 var(--titre); }
+.aide { margin: 0; font-size: 13px; color: var(--encre-douce); }
+
+/* fiche */
+.photo { margin: 0; border-bottom: 1px solid var(--filet); background: var(--papier); }
+.photo:empty { display: none; }
+.photo img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; filter: saturate(.92) sepia(.08); }
+.photo figcaption { padding: 5px 14px; font-size: 11px; line-height: 1.35; color: var(--encre-douce); }
+.photo figcaption a { color: inherit; }
+.corps { padding: 14px 18px 18px; position: relative; }
+.corps h2 { margin: 0 44px 8px 0; font: 700 28px/1.05 var(--titre); color: var(--encre); overflow-wrap: anywhere; hyphens: auto; }
+.pastilles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+.pastille { font: 600 11px/1 var(--texte); letter-spacing: .02em; padding: 5px 9px; border-radius: 20px; border: 1px solid transparent; }
+.cat-musee { background: #8c2342; color: #fff; }
+.cat-famille { background: #4f8a46; color: #fff; }
+.cat-shopping { background: #d9772f; color: #fff; }
+.etat-ouvert { background: #dfeccb; color: #2f5a1f; border-color: #b8d39c; }
+.etat-bientot { background: #fbe9bb; color: #7a5208; border-color: #ecd08a; }
+.etat-ferme { background: #f4dcd9; color: #8c2342; border-color: #e6bdb7; }
+.etat-pause { background: #dcecf3; color: #2a5a73; border-color: #b6d4e2; }
+.age { background: var(--papier); color: var(--encre-douce); border-color: var(--filet); }
+.description { margin: 0 0 12px; font: 500 17px/1.45 var(--titre); }
+.alerte { margin: 0 0 12px; padding: 8px 10px; background: #fbf1d4; border-left: 3px solid #d9a93a; font-size: 13.5px; line-height: 1.35; }
+.trajets { margin: 0 0 14px; }
+.trajets h3 { margin: 0 0 6px; font: 700 12px/1 var(--texte); letter-spacing: .12em; text-transform: uppercase; color: var(--encre-douce); }
+.trajet {
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 2px 8px; width: 100%; margin: 0 0 6px; padding: 9px 12px;
+  text-align: left; background: #fff; border: 1px solid var(--filet); border-radius: 6px; font: 500 14px/1.2 var(--texte); color: var(--encre); cursor: pointer;
+}
+.trajet:hover { border-color: #b29a6c; box-shadow: 0 2px 6px rgba(40, 25, 10, .12); }
+.trajet b { font: 700 18px/1 var(--titre); }
+.trajet small { grid-column: 1 / -1; font-size: 12px; color: var(--encre-douce); }
+.ligne-tram { display: inline-block; min-width: 1.5em; padding: 1px 5px; border-radius: 3px; text-align: center; color: #fff; font: 700 11px/1.4 var(--texte); }
+.infos { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0 0 16px; font-size: 13.5px; line-height: 1.35; }
+.infos dt { color: var(--encre-douce); }
+.infos dd { margin: 0; }
+.infos small { display: block; margin-top: 2px; font-size: 12px; color: var(--encre-douce); }
+.infos .jours { display: inline-block; min-width: 6.5em; }
+.boutons { display: flex; gap: 8px; }
+.btn { flex: 1; text-align: center; text-decoration: none; padding: 11px 6px; border-radius: 6px; font: 600 14px/1 var(--texte); border: 1px solid var(--encre); background: var(--encre); color: var(--papier-clair); }
+.btn.sec { background: transparent; color: var(--encre); }
+.source { margin: 12px 0 0; font-size: 11.5px; color: var(--encre-douce); }
+.source a { color: inherit; }
+.suite { display: none; }
+
+/* liste */
+.liste-lieux { list-style: none; margin: 12px 0 0; padding: 0; }
+.liste-lieux button {
+  display: grid; grid-template-columns: 48px 1fr auto; grid-template-areas: "ph nom etat" "ph temps temps"; align-items: center; gap: 2px 10px;
+  width: 100%; padding: 8px 2px; background: none; border: 0; border-bottom: 1px solid #e3d6ba; text-align: left; cursor: pointer; color: var(--encre);
+}
+.liste-lieux button:hover { background: rgba(205, 187, 151, .15); }
+.vignette-lieu { grid-area: ph; width: 48px; height: 48px; border-radius: 50%; background: #ddd center / cover; border: 2px solid #fff; box-shadow: 0 0 0 2px var(--c); }
+.liste-lieux .nom { grid-area: nom; font: 700 16px/1.15 var(--titre); }
+.liste-lieux .etat { grid-area: etat; font: 600 10.5px/1 var(--texte); padding: 4px 7px; border-radius: 20px; border: 1px solid transparent; }
+.liste-lieux .temps { grid-area: temps; font-size: 12px; color: var(--encre-douce); }
+
+/* médaillon d'un lieu fermé : photo ternie */
+.medaillon.dort .rond { filter: grayscale(.85) brightness(.95); opacity: .85; }
+.medaillon.choisi .rond { transform: scale(1.15); box-shadow: 0 0 0 3.5px var(--c), 0 0 0 7px rgba(255,255,255,.7), 0 9px 18px rgba(30, 20, 5, .5); }
+
+/* barre du trajet affiché */
+.barre-trajet {
+  position: absolute; z-index: 4; left: 50%; transform: translateX(-50%); bottom: 12px; width: min(94%, 480px); display: flex; align-items: center; gap: 8px;
+  padding: 9px 10px 9px 14px; background: rgba(250, 245, 234, .97); border: 1px solid var(--filet); box-shadow: 0 8px 20px rgba(30, 18, 5, .35); font-size: 13.5px;
+}
+.barre-trajet[hidden] { display: none; }
+.barre-trajet span { flex: 1; }
+.barre-trajet b { font: 700 16px/1 var(--titre); }
+.barre-trajet button { padding: 7px 11px; border: 1px solid var(--encre); border-radius: 5px; background: transparent; font: 600 12.5px/1 var(--texte); cursor: pointer; color: var(--encre); }
+.barre-trajet button:last-child { background: var(--encre); color: var(--papier-clair); }

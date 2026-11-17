@@ -2,7 +2,7 @@
 // le parole generiche sono tradotte (museo, mercato, centro commerciale…).
 export default {
   ui: {
-    'doc.titre': 'Canelé Quest · Bordeaux in famiglia',
+    'doc.titre': 'Bordeaux Miniature · musei, famiglie, shopping',
     'langue.titre': 'Cambia lingua',
     'inventaire.aria': 'Categorie',
     'cats.musee': 'Musei', 'cats.famille': 'Famiglia', 'cats.shopping': 'Shopping', 'cats.liste': 'Elenco',
@@ -10,6 +10,7 @@ export default {
     'carte.aria': 'Mappa in pixel di Bordeaux',
     'credits': 'Sfondo: IGN BD TOPO, © OpenStreetMap',
     'hotel': 'HOTEL',
+    'hotel.nom': "Il vostro hotel",
     'pied.defaut': 'Tocca un segnaposto',
     'liste.titre': 'I luoghi',
     'liste.aide': 'Dal più vicino al più lontano dall’hotel, a piedi.',

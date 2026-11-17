@@ -2,7 +2,7 @@
 // Jardin public…); se traducen las palabras genéricas (museo, mercado, centro comercial…).
 export default {
   ui: {
-    'doc.titre': 'Canelé Quest · Burdeos en familia',
+    'doc.titre': 'Bordeaux Miniature · museos, familias, compras',
     'langue.titre': 'Cambiar de idioma',
     'inventaire.aria': 'Categorías',
     'cats.musee': 'Museos', 'cats.famille': 'Familia', 'cats.shopping': 'Compras', 'cats.liste': 'Lista',
@@ -10,6 +10,7 @@ export default {
     'carte.aria': 'Mapa pixelado de Burdeos',
     'credits': 'Fondo: IGN BD TOPO, © OpenStreetMap',
     'hotel': 'HOTEL',
+    'hotel.nom': "Su hotel",
     'pied.defaut': 'Toque un marcador',
     'liste.titre': 'Los lugares',
     'liste.aide': 'Del más cercano al más lejano del hotel, a pie.',
