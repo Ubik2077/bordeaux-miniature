@@ -30,11 +30,12 @@ python3 -m http.server 8645   # puis http://localhost:8645/
 
 ## Affiche A5
 
-`affiche.html` (+ `js/affiche.js`) : titre espacé, le cœur de la ville en maquette découpé comme une île posée sur une
-carte de papier (tranche et bord déchiré), monuments nommés par des lignes de rappel, QR code vers la carte.
-La vue 3D est dessinée avec le même code que la carte (`js/fond-carte.js`), puis figée en image pour l'impression.
+`affiche.html` (+ `js/affiche.js`) : l'illustration « maquette » de Bordeaux (`img/affiche/illustration.webp`, générée
+par IA, 1086 × 1448 px) montée comme un tirage, puis le QR code vers la carte et le texte en cinq langues.
 Imprimer depuis le navigateur (A5, marges aucune, graphiques d'arrière-plan) ; `sh scripts/affiche.sh` produit le PDF
 avec Chrome ou Brave sans fenêtre (le mode sans fenêtre de Brave 157 ne fonctionne pas sur ce Mac).
+Inexactitudes connues de l'illustration : pont Chaban-Delmas dessiné haubané (c'est un pont levant à quatre pylônes),
+Cité du Vin trop basse, monuments réarrangés librement.
 
 ## Reste à faire
 
