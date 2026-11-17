@@ -28,11 +28,17 @@ python3 -m http.server 8645   # puis http://localhost:8645/
 
 `data/lieux.json` : 24 lieux, horaires vérifiés le 16 novembre 2026 avec leur source (repris de Canelé Quest).
 
+## Affiche A5
+
+`affiche.html` (+ `js/affiche.js`) : titre espacé, le cœur de la ville en maquette découpé comme une île posée sur une
+carte de papier (tranche et bord déchiré), monuments nommés par des lignes de rappel, QR code vers la carte.
+La vue 3D est dessinée avec le même code que la carte (`js/fond-carte.js`), puis figée en image pour l'impression.
+Imprimer depuis le navigateur (A5, marges aucune, graphiques d'arrière-plan) ; `sh scripts/affiche.sh` produit le PDF
+avec Chrome ou Brave sans fenêtre (le mode sans fenêtre de Brave 157 ne fonctionne pas sur ce Mac).
+
 ## Reste à faire
 
-Affiche (inspirée de
-l'affiche « La Rochelle » : ville découpée en île sur une carte papier, bords déchirés, titre espacé, lignes de
-rappel vers les monuments, QR code), liens vers les deux autres cartes, mise en ligne (dépôt bordeaux-miniature).
+Liens vers les deux autres cartes, mise en ligne (dépôt bordeaux-miniature).
 
 Fait : fiches (photo créditée, état d'ouverture, description, trajets, infos pratiques), liste repliable,
 filtres par catégorie, médaillons ternis quand le lieu est fermé, tracé des trajets à pied et en tram ;

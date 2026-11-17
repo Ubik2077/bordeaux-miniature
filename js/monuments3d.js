@@ -360,7 +360,8 @@ function citeDuVin(anneau, h) {
 }
 
 // ---------- la couche MapLibre ----------
-export function coucheMonuments(D) {
+// options.exag : exagération des hauteurs (l'affiche pousse un peu plus que la carte)
+export function coucheMonuments(D, { exag = EXAG } = {}) {
   for (const b of D.batis) {
     const r = anneauLocal(b.anneau);
     if (r.length < 3) continue;
@@ -385,7 +386,7 @@ export function coucheMonuments(D) {
   repetes(caisse, M.claire, lucarnes);
   const chapeau = new THREE.ConeGeometry(1.1, 1.0, 4); chapeau.rotateX(Math.PI / 2); chapeau.rotateZ(Math.PI / 4); chapeau.translate(0, 0, 2.4);
   repetes(chapeau, M.ardoiseUnie, lucarnes);
-  groupe.scale.set(1, 1, EXAG);
+  groupe.scale.set(1, 1, exag);
 
   const scene = new THREE.Scene();
   scene.add(groupe);
