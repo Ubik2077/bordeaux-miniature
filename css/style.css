@@ -1,0 +1,65 @@
+/* Bordeaux Miniature : une carte de papier posée sur une table, des maquettes en relief. */
+:root {
+  --papier: #f2e8d3; --papier-clair: #f8f2e4; --encre: #2f2a24; --encre-douce: #6e6355; --filet: #cdbb97;
+  --vin: #8c2342; --parc: #4f8a46; --orange: #d9772f; --repere: #5f6b7d; --hotel: #2f6f9a;
+  --titre: 'Cormorant Garamond', Georgia, serif; --texte: Inter, system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; font-family: var(--texte); color: var(--encre); overflow: hidden; }
+body {
+  background:
+    repeating-linear-gradient(92deg, rgba(255,255,255,.035) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(88deg, rgba(0,0,0,.07) 0 1px, transparent 1px 23px),
+    linear-gradient(180deg, #6e4b2d, #5a3b22 60%, #4e331e);
+}
+.feuille { position: fixed; inset: calc(8px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom)); overflow: hidden;
+  background: #86b8cf; box-shadow: 0 2px 0 rgba(255,255,255,.25) inset, 0 14px 30px rgba(20, 10, 0, .55), 0 2px 6px rgba(20, 10, 0, .4); }
+@media (min-width: 760px) { .feuille { inset: 22px; } }
+#carte { position: absolute; inset: 0; }
+.lumiere { position: absolute; inset: 0; pointer-events: none; z-index: 2; mix-blend-mode: soft-light;
+  background: radial-gradient(110% 75% at 0% 0%, rgba(255, 205, 130, .22), transparent 55%), radial-gradient(90% 60% at 100% 100%, rgba(40, 25, 60, .14), transparent 60%); }
+.flou { position: absolute; left: 0; right: 0; height: 16%; pointer-events: none; z-index: 2; backdrop-filter: blur(2.2px); -webkit-backdrop-filter: blur(2.2px); }
+.flou.haut { top: 0; mask-image: linear-gradient(#000 10%, transparent); -webkit-mask-image: linear-gradient(#000 10%, transparent); }
+.flou.bas { bottom: 0; mask-image: linear-gradient(transparent, #000 90%); -webkit-mask-image: linear-gradient(transparent, #000 90%); }
+.vignette { position: absolute; inset: 0; pointer-events: none; z-index: 2; box-shadow: inset 0 0 90px rgba(70, 45, 15, .38), inset 0 0 0 1px rgba(120, 90, 50, .5); }
+
+/* cartouche du titre */
+.cartouche { position: absolute; z-index: 3; left: 10px; bottom: 10px; max-width: 280px; padding: 10px 14px;
+  background: rgba(244, 235, 215, .95); border: 1px solid var(--filet); box-shadow: 0 6px 16px rgba(40, 25, 10, .28); }
+.cartouche::before { content: ''; position: absolute; inset: 3px; border: 1px solid rgba(140, 110, 70, .35); pointer-events: none; }
+.cartouche h1 { margin: 0; font: 700 30px/0.95 var(--titre); letter-spacing: .04em; }
+.cartouche h1 span { display: block; font-size: 15px; font-style: italic; font-weight: 500; letter-spacing: .02em; color: var(--vin); margin-top: 3px; }
+.cartouche .region { margin: 5px 0 0; font-size: 9.5px; letter-spacing: .15em; text-transform: uppercase; color: var(--encre-douce); font-weight: 600; }
+
+/* rose des vents : tourne avec la carte, un toucher remet le nord en haut */
+.rose { position: absolute; z-index: 3; right: 10px; bottom: 14px; width: 60px; height: 60px; padding: 0; border: 0; background: none; cursor: pointer;
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,.25)); }
+.rose svg { width: 100%; height: 100%; transition: transform .1s linear; }
+
+/* médaillons photo des lieux ; « replie » : un simple point quand la place manque */
+.medaillon { display: flex; flex-direction: column; align-items: center; cursor: pointer; }
+.medaillon .rond { width: 58px; height: 58px; border-radius: 50%; background: #ddd center / cover; border: 3px solid #fff;
+  box-shadow: 0 0 0 2.5px var(--c), 0 7px 14px rgba(30, 20, 5, .45); transition: transform .15s; }
+.medaillon:hover .rond, .medaillon.choisi .rond { transform: scale(1.1); }
+.medaillon .nom { margin-top: 5px; padding: 2px 8px; max-width: 140px; text-align: center; background: rgba(246, 238, 220, .96); border: 1px solid var(--filet);
+  font: 700 13.5px/1.1 var(--titre); color: var(--encre); box-shadow: 0 2px 5px rgba(40, 25, 10, .2); }
+.medaillon .tige { width: 2px; height: 22px; background: linear-gradient(var(--c), rgba(0,0,0,.35)); }
+.medaillon .pied { width: 11px; height: 11px; border-radius: 50%; background: var(--c); border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.45); }
+.medaillon.replie .rond, .medaillon.replie .nom { display: none; }
+.medaillon.replie .tige { height: 9px; }
+.medaillon.replie .pied { width: 15px; height: 15px; }
+.medaillon.hotel .rond { display: flex; align-items: center; justify-content: center; background: var(--hotel); color: #fff; font: 700 26px/1 var(--titre); }
+
+.etiquette { pointer-events: none; white-space: nowrap; font-family: var(--titre); color: rgba(47, 42, 36, .7); text-transform: uppercase; }
+.etiquette.quartier { font-size: 13px; font-weight: 700; letter-spacing: .32em; text-shadow: 0 0 3px rgba(244, 235, 215, .9); }
+.etiquette.fleuve { font-size: 24px; font-style: italic; font-weight: 600; letter-spacing: .45em; color: rgba(30, 70, 95, .62); }
+
+.bulle { position: absolute; z-index: 4; left: 50%; transform: translateX(-50%); top: 10px; width: min(92%, 380px); padding: 12px 14px;
+  background: rgba(250, 245, 234, .97); border: 1px solid var(--filet); box-shadow: 0 8px 24px rgba(40, 25, 10, .3); font-size: 14px; line-height: 1.4; }
+.bulle b { display: block; font: 700 21px/1.1 var(--titre); margin-bottom: 4px; }
+.bulle[hidden] { display: none; }
+.maplibregl-ctrl-attrib { background: rgba(244, 235, 215, .8) !important; }
+.chargement { position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center; background: var(--papier);
+  font: italic 600 22px var(--titre); color: var(--encre-douce); transition: opacity .6s; }
+.chargement.fini { opacity: 0; pointer-events: none; }
+@media (max-width: 520px) { .cartouche { max-width: 220px; padding: 8px 11px; } .cartouche h1 { font-size: 25px; } .cartouche h1 span { font-size: 13px; } }

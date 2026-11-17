@@ -1,0 +1,819 @@
+{
+  "_lisez-moi": "Lieux de Bordeaux Miniature. Horaires au format OpenStreetMap opening_hours, par période (du/au en MM-JJ, bornes incluses). feries : 'off' = fermé les jours fériés, sauf les dates de 'sauf'. Arrêts de tram et temps de trajet : calculés par scripts/trajets.mjs (data/trajets.json). age et duree : conseils de rédaction, à relire. Descriptions et photos : étape suivante.",
+  "verifie": "2026-11-16",
+  "hotel": {
+    "nom": "Ibis Bordeaux Centre Gare Saint-Jean Euratlantique",
+    "lat": 44.82654,
+    "lon": -0.55693
+  },
+  "lieux": [
+    {
+      "id": "musee-aquitaine",
+      "nom": "Musée d'Aquitaine",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.83562,
+      "lon": -0.57469,
+      "osm": "w80024893",
+      "adresse": "20 cours Pasteur, 33000 Bordeaux",
+      "quartier": "Centre – Saint-Michel",
+      "description": "Un voyage dans l'histoire de Bordeaux et de sa région, de la Préhistoire à nos jours : outils de silex, trésors gallo-romains, maquettes du port. On y admire la Vénus à la corne, sculptée il y a environ 25 000 ans.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Tu-Su 11:00-18:00"
+          }
+        ],
+        "feries": "off",
+        "sauf": [
+          "07-14",
+          "08-15"
+        ]
+      },
+      "source": "https://www.bordeaux.fr/le-musee-daquitaine",
+      "lien": "https://www.musee-aquitaine-bordeaux.fr/",
+      "pmr": null,
+      "age": "dès 7 ans",
+      "duree": "1 h 30 à 2 h",
+      "notes": "Gratuit le 1er dimanche du mois (musées municipaux). Accessibilité PMR non précisée par la Ville : à vérifier sur le site du musée."
+    },
+    {
+      "id": "musba",
+      "nom": "Musée des Beaux-Arts (MusBA)",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.83734,
+      "lon": -0.58068,
+      "osm": "w79979299",
+      "adresse": "20 cours d'Albret, 33000 Bordeaux",
+      "quartier": "Hôtel de Ville",
+      "description": "Des peintures européennes du XVᵉ au XXᵉ siècle, dans deux ailes qui bordent le jardin de la mairie. On y croise Rubens, Titien, Delacroix ou Odilon Redon, né à Bordeaux.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo,We-Su 11:00-18:00"
+          }
+        ],
+        "feries": "certains",
+        "sauf": [
+          "07-14",
+          "08-15"
+        ]
+      },
+      "source": "https://www.bordeaux.fr/le-musee-des-beaux-arts-musba",
+      "lien": "https://www.musba-bordeaux.fr/",
+      "pmr": true,
+      "age": "dès 8 ans",
+      "duree": "1 h 30",
+      "notes": "Fermé le mardi. Expositions temporaires à la Galerie des Beaux-Arts, place du Colonel-Raynal. « Fermé certains jours fériés » : liste non publiée."
+    },
+    {
+      "id": "capc",
+      "nom": "CAPC – musée d'art contemporain",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.84864,
+      "lon": -0.57216,
+      "osm": "w117456213",
+      "adresse": "7 rue Ferrère, 33000 Bordeaux",
+      "quartier": "Chartrons",
+      "description": "L'art contemporain dans l'entrepôt Lainé, un immense entrepôt du début du XIXᵉ siècle où l'on stockait les denrées venues des colonies. Les grandes nefs de pierre et de brique valent à elles seules la visite.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Tu-Su 11:00-18:00"
+          }
+        ],
+        "feries": "off",
+        "sauf": [
+          "07-14",
+          "08-15"
+        ]
+      },
+      "source": "https://www.bordeaux.fr/le-capc-musee-dart-contemporain-de-bordeaux",
+      "lien": "https://www.capc-bordeaux.fr/",
+      "pmr": null,
+      "age": "dès 6 ans",
+      "duree": "1 h à 1 h 30",
+      "notes": "Nocturne jusqu'à 20 h le 2e mercredi du mois selon des sites tiers, absente de la page de la Ville : non retenue."
+    },
+    {
+      "id": "madd",
+      "nom": "madd – musée des Arts décoratifs et du Design",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.83888,
+      "lon": -0.58023,
+      "osm": "w79981701",
+      "adresse": "39 rue Bouffard, 33000 Bordeaux",
+      "quartier": "Hôtel de Ville",
+      "description": "Meubles, porcelaines, objets du quotidien et design, autour de l'hôtel de Lalande (XVIIIᵉ siècle) et d'une ancienne prison transformée. Le musée a rouvert en avril 2026 ; l'hôtel particulier rouvrira courant 2027.",
+      "alerte": "L'hôtel particulier et le parcours complet rouvriront courant 2027 : seuls l'accueil et les nouveaux espaces sont ouverts.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo,We-Su 11:00-18:00"
+          }
+        ],
+        "feries": "off",
+        "sauf": [
+          "07-14",
+          "08-15"
+        ]
+      },
+      "source": "https://www.bordeaux.fr/le-madd-musee-des-arts-decoratifs-et-du-design",
+      "lien": "https://madd-bordeaux.fr/",
+      "pmr": true,
+      "age": "dès 6 ans",
+      "duree": "1 h",
+      "notes": "Rouvert le 22 avril 2026 (accueil, nouveaux espaces, ancienne prison). L'hôtel particulier rénové et le parcours complet ouvriront « courant 2027 » : à afficher sur la fiche. Fermé le mardi."
+    },
+    {
+      "id": "douanes",
+      "nom": "Musée national des Douanes",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.84095,
+      "lon": -0.56981,
+      "osm": "n279711473",
+      "adresse": "1 place de la Bourse, 33000 Bordeaux",
+      "quartier": "Saint-Pierre",
+      "description": "Dans l'ancien hôtel des Fermes de la place de la Bourse, ce musée raconte les douaniers d'hier et d'aujourd'hui : uniformes, contrebandiers, objets saisis. Une visite courte, idéale en famille.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Tu-Su 10:00-18:00"
+          }
+        ],
+        "fermetures": [
+          "12-25",
+          "01-01"
+        ]
+      },
+      "source": "https://www.musee-douanes.fr/",
+      "lien": "https://www.musee-douanes.fr/",
+      "pmr": null,
+      "age": "dès 7 ans",
+      "duree": "1 h",
+      "notes": "Rouvert après rénovation le 16 mai 2025. Accessibilité : page dédiée sur le site du musée, à lire."
+    },
+    {
+      "id": "mer-marine",
+      "nom": "Musée Mer Marine",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.86741,
+      "lon": -0.55388,
+      "osm": "w581501288",
+      "adresse": "89 rue des Étrangers, 33300 Bordeaux",
+      "quartier": "Bassins à flot",
+      "description": "Maquettes de navires, cartes, instruments et grandes expositions consacrées à la mer, dans un bâtiment récent des bassins à flot. On y voit la maquette du France II, le plus grand voilier du monde à son lancement à Bordeaux en 1911.",
+      "horaires": {
+        "periodes": [
+          {
+            "vacances": true,
+            "oh": "Tu-Su 10:30-19:00"
+          },
+          {
+            "oh": "Tu-Fr 13:00-18:00; Sa,Su 10:30-18:00"
+          }
+        ],
+        "fermetures": [
+          "01-01",
+          "12-25"
+        ]
+      },
+      "source": "https://www.mmmbordeaux.com",
+      "lien": "https://web.digitick.com/index-css5-museemermarine-pg1.html",
+      "pmr": true,
+      "age": "dès 5 ans",
+      "duree": "1 h 30 à 2 h",
+      "notes": "La page de la Ville (mise à jour le 10/09/2026) donne une fermeture à 19 h toute l'année ; on suit le site du musée (18 h hors vacances). Exposition « Bleu Sauvage » (A-MO) jusqu'au 3 janvier 2027."
+    },
+    {
+      "id": "bassins-lumieres",
+      "nom": "Bassins des Lumières",
+      "categories": [
+        "musee",
+        "famille"
+      ],
+      "lat": 44.87037,
+      "lon": -0.55887,
+      "osm": "w27589401",
+      "adresse": "Base sous-marine, impasse Brown-de-Colstoun, 33300 Bordeaux",
+      "quartier": "Bassins à flot",
+      "description": "Dans l'ancienne base sous-marine de la Seconde Guerre mondiale, des œuvres d'art sont projetées en très grand sur les murs et se reflètent dans l'eau des bassins. Une expérience en musique, saisissante pour les petits comme pour les grands.",
+      "alerte": "Programme actuel (Matisse, Dinosaures) jusqu'au 18 décembre 2026.",
+      "horaires": {
+        "periodes": [
+          {
+            "du": "04-01",
+            "au": "09-30",
+            "oh": "Su-Th 10:00-19:00; Fr,Sa 10:00-21:00"
+          },
+          {
+            "du": "10-01",
+            "au": "03-31",
+            "oh": "Mo-Fr,Su 10:00-18:00; Sa 10:00-20:00"
+          }
+        ],
+        "variable": true
+      },
+      "source": "https://www.bassins-lumieres.com/fr/visiter/informations-pratiques/horaires",
+      "lien": "https://www.bassins-lumieres.com/fr/billetterie",
+      "pmr": null,
+      "age": "tout âge",
+      "duree": "1 h à 1 h 15",
+      "notes": "Calendrier officiel (semaine du 16/11/2026) : 10 h–18 h, samedi jusqu'à 20 h. La page de la Ville annonce plutôt 20 h les vendredis et samedis d'octobre à mars, et 19 h/21 h d'avril à septembre et pendant les vacances. Programmes actuels (Matisse, Dinosaures) jusqu'au 18 décembre 2026 : surveiller une éventuelle fermeture entre deux saisons."
+    },
+    {
+      "id": "cap-sciences",
+      "nom": "Cap Sciences",
+      "categories": [
+        "musee",
+        "famille"
+      ],
+      "lat": 44.85964,
+      "lon": -0.55421,
+      "osm": "w154309547",
+      "adresse": "Hangar 20, quai de Bacalan, 33300 Bordeaux",
+      "quartier": "Bacalan",
+      "description": "Le centre de sciences de Bordeaux : des expositions à toucher, manipuler et tester, des ateliers et un espace pour les 3-6 ans. Installé dans un hangar du port, au bord de la Garonne.",
+      "horaires": {
+        "periodes": [
+          {
+            "vacances": true,
+            "oh": "Mo-Fr 11:00-19:00; Sa,Su 14:00-19:00"
+          },
+          {
+            "oh": "Tu-Fr 14:00-18:00; Sa,Su 14:00-19:00"
+          }
+        ],
+        "fermetures": [
+          "01-01",
+          "05-01",
+          "12-25"
+        ]
+      },
+      "source": "https://www.cap-sciences.net/?p=15726",
+      "lien": "https://billetterie.cap-sciences.net/Exhibitions/Overview",
+      "pmr": null,
+      "age": "3 à 14 ans",
+      "duree": "2 h",
+      "notes": "Horaires « vacances » relevés pour les vacances d'octobre ; à confirmer pour les autres vacances. Gratuit pour les moins de 5 ans."
+    },
+    {
+      "id": "cite-du-vin",
+      "nom": "La Cité du Vin",
+      "categories": [
+        "musee"
+      ],
+      "lat": 44.86237,
+      "lon": -0.55002,
+      "osm": "w421965158",
+      "adresse": "134 quai de Bacalan, 33300 Bordeaux",
+      "quartier": "Bassins à flot",
+      "description": "Un bâtiment aux courbes dorées, qui évoque le vin qui tourne dans un verre. Le parcours interactif fait voyager dans les cultures du vin du monde entier, et la visite se termine au belvédère du 8ᵉ étage, avec vue sur la Garonne.",
+      "alerte": "Fermeture annuelle du 25 au 31 janvier 2027.",
+      "horaires": {
+        "periodes": [
+          {
+            "du": "11-01",
+            "au": "12-27",
+            "oh": "Mo-Fr,Su 10:00-18:00; Sa 10:00-19:00"
+          },
+          {
+            "du": "12-28",
+            "au": "01-02",
+            "oh": "Mo-Su 10:00-19:00"
+          },
+          {
+            "du": "01-03",
+            "au": "01-03",
+            "oh": "Mo-Fr,Su 10:00-18:00; Sa 10:00-19:00"
+          },
+          {
+            "du": "01-04",
+            "au": "02-28",
+            "oh": "Mo-Su 10:00-18:00"
+          },
+          {
+            "du": "03-01",
+            "au": "03-31",
+            "oh": "Mo-Fr,Su 10:00-18:00; Sa 10:00-19:00"
+          },
+          {
+            "du": "04-01",
+            "au": "04-02",
+            "oh": "Mo-Su 10:00-18:00"
+          },
+          {
+            "du": "04-03",
+            "au": "10-31",
+            "oh": "Mo-Su 10:00-19:00"
+          }
+        ],
+        "exceptions": {
+          "12-24": "10:00-16:00",
+          "12-25": "off",
+          "2027-03-29": "10:00-19:00"
+        },
+        "fermetures": [
+          [
+            "2027-01-25",
+            "2027-01-31"
+          ]
+        ]
+      },
+      "source": "https://www.laciteduvin.com/fr/info",
+      "lien": "https://www.laciteduvin.com/fr",
+      "pmr": null,
+      "age": "dès 12 ans (parcours sur le vin)",
+      "duree": "2 h à 3 h",
+      "notes": "Semaine de fermeture annuelle du 25 au 31 janvier 2027. Le billet inclut un verre au Belvédère (jus de raisin pour les enfants, à vérifier)."
+    },
+    {
+      "id": "musee-illusion",
+      "nom": "Musée de l'Illusion",
+      "categories": [
+        "musee",
+        "famille"
+      ],
+      "lat": 44.83908,
+      "lon": -0.58278,
+      "osm": "n11462210931",
+      "adresse": "4 rue Bonnaffé, 33000 Bordeaux",
+      "quartier": "Mériadeck",
+      "description": "Des installations qui trompent les yeux et le cerveau : jeux de perspective, miroirs, hologrammes et illusions d'optique à tester soi-même. Parfait par temps de pluie, et l'occasion de photos étonnantes.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo-We,Su 10:00-20:00; Th-Sa 10:00-22:00"
+          }
+        ],
+        "exceptions": {
+          "2026-12-24": "10:00-18:00",
+          "2026-12-25": "11:00-20:00",
+          "2026-12-31": "10:00-18:00",
+          "2027-01-01": "10:00-20:00"
+        }
+      },
+      "source": "https://museedelillusion.fr/en/contact/bordeaux",
+      "lien": "https://museedelillusion.fr/en/buy-tickets-choose-museum/",
+      "pmr": null,
+      "age": "dès 5 ans",
+      "duree": "1 h",
+      "notes": "Ouvert tous les jours, jours fériés compris (site officiel). Horaires des fêtes 2026 publiés. Le site cite le bus 1 (arrêt Centre commercial Mériadeck). Pas de photo libre sur Wikimedia Commons. Accessibilité PMR non précisée."
+    },
+    {
+      "id": "museum",
+      "nom": "Muséum de Bordeaux – sciences et nature",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.8485,
+      "lon": -0.57999,
+      "osm": "w154772662",
+      "adresse": "5 place Bardineau, 33000 Bordeaux",
+      "quartier": "Jardin public",
+      "description": "Le muséum d'histoire naturelle de la ville, rouvert en 2019 après de longs travaux : animaux naturalisés, minéraux, fossiles et expositions pensées pour les enfants. Il borde le Jardin public, parfait pour enchaîner.",
+      "horaires": {
+        "periodes": [
+          {
+            "du": "04-01",
+            "au": "09-30",
+            "oh": "Tu-Su 10:30-18:00"
+          },
+          {
+            "du": "10-01",
+            "au": "03-31",
+            "oh": "Tu-Su 10:30-17:30"
+          }
+        ],
+        "feries": "off",
+        "sauf": [
+          "07-14",
+          "08-15"
+        ]
+      },
+      "source": "https://www.bordeaux.fr/le-museum-de-bordeaux-sciences-et-nature",
+      "lien": "https://www.museum-bordeaux.fr",
+      "pmr": null,
+      "age": "dès 3 ans",
+      "duree": "1 h 30",
+      "notes": "Au bord du Jardin public : les deux fiches peuvent renvoyer l'une à l'autre."
+    },
+    {
+      "id": "jardin-public",
+      "nom": "Jardin public",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.84885,
+      "lon": -0.57797,
+      "osm": "w21025479",
+      "adresse": "Cours de Verdun, 33000 Bordeaux",
+      "quartier": "Jardin public",
+      "description": "Un grand jardin à l'anglaise en plein centre, avec sa pièce d'eau, ses canards et ses grands arbres. Les enfants y trouvent une aire de jeux, un manège ancien, un théâtre de marionnettes et le petit bateau « Va, Petit Mousse ».",
+      "horaires": {
+        "periodes": [
+          {
+            "du": "11-01",
+            "au": "02-14",
+            "oh": "Mo-Su 07:00-18:00"
+          },
+          {
+            "du": "02-15",
+            "au": "03-31",
+            "oh": "Mo-Su 07:00-19:00"
+          },
+          {
+            "du": "04-01",
+            "au": "05-31",
+            "oh": "Mo-Su 07:00-20:00"
+          },
+          {
+            "du": "06-01",
+            "au": "08-31",
+            "oh": "Mo-Su 07:00-21:00"
+          },
+          {
+            "du": "09-01",
+            "au": "09-30",
+            "oh": "Mo-Su 07:00-20:00"
+          },
+          {
+            "du": "10-01",
+            "au": "10-31",
+            "oh": "Mo-Su 07:00-19:00"
+          }
+        ]
+      },
+      "source": "https://www.bordeaux.fr/le-jardin-public",
+      "lien": "https://www.bordeaux.fr/le-jardin-public",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h",
+      "notes": "Aire de jeux, théâtre de marionnettes, manège à l'ancienne. Bateau « Va, Petit Mousse » : 10 h–12 h 30 et 13 h–18 h, tous les jours pendant les vacances, sinon mercredi, samedi et dimanche."
+    },
+    {
+      "id": "jardin-botanique",
+      "nom": "Jardin botanique de la Bastide",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.84297,
+      "lon": -0.55535,
+      "osm": "w219630344",
+      "adresse": "Esplanade Linné, 33100 Bordeaux",
+      "quartier": "La Bastide",
+      "description": "Sur la rive droite, un jardin botanique contemporain qui présente les plantes de la région dans leurs milieux naturels, et celles que l'homme cultive. Le jardin est gratuit ; les serres et les expositions sont payantes.",
+      "horaires": {
+        "periodes": [
+          {
+            "du": "11-01",
+            "au": "02-29",
+            "oh": "Mo-Su 08:00-18:00"
+          },
+          {
+            "du": "03-01",
+            "au": "03-31",
+            "oh": "Mo-Su 08:00-19:00"
+          },
+          {
+            "du": "04-01",
+            "au": "09-30",
+            "oh": "Mo-Su 08:00-20:00"
+          },
+          {
+            "du": "10-01",
+            "au": "10-31",
+            "oh": "Mo-Su 08:00-19:00"
+          }
+        ],
+        "serres": {
+          "oh": "Tu-Su 11:00-18:00",
+          "feries": "off",
+          "sauf": [
+            "07-14",
+            "08-15"
+          ]
+        }
+      },
+      "source": "https://www.bordeaux.fr/parc-jardin/jardin-botanique-de-bordeaux",
+      "lien": "https://www.bordeaux.fr/parc-jardin/jardin-botanique-de-bordeaux",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h",
+      "notes": "Jardin extérieur gratuit ; serres et expositions payantes (fermées le lundi)."
+    },
+    {
+      "id": "parc-angeliques",
+      "nom": "Parc aux Angéliques",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.8468,
+      "lon": -0.56512,
+      "osm": "w25691127",
+      "adresse": "Quai des Queyries, 33100 Bordeaux",
+      "quartier": "La Bastide",
+      "description": "Une promenade verte de 3,5 km sur la rive droite, entre le pont Saint-Jean et le pont Chaban-Delmas. Pelouses, vélos et pique-niques, avec la plus belle vue sur les quais et la place de la Bourse.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "24/7"
+          }
+        ]
+      },
+      "source": "https://www.bordeaux.fr/parc-jardin/parc-aux-angeliques",
+      "lien": "https://www.bordeaux.fr/parc-jardin/parc-aux-angeliques",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h",
+      "notes": "3,5 km de berges entre le pont Saint-Jean et le pont Chaban-Delmas, vue sur la place de la Bourse. La Ville ne mentionne pas d'aire de jeux (seulement des terrains de basket)."
+    },
+    {
+      "id": "miroir-eau",
+      "nom": "Miroir d'eau",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.84169,
+      "lon": -0.56908,
+      "osm": "w53246398",
+      "adresse": "Place de la Bourse, 33000 Bordeaux",
+      "quartier": "Saint-Pierre",
+      "description": "Deux centimètres d'eau sur une grande dalle de granit : la place de la Bourse s'y reflète, puis un brouillard artificiel se lève et les enfants adorent courir dedans. Gratuit ; en pause l'hiver, de novembre à avril.",
+      "alerte": "Remise en eau vers la mi-avril, selon la météo.",
+      "horaires": {
+        "periodes": [
+          {
+            "du": "11-01",
+            "au": "04-15",
+            "oh": "off",
+            "raison": "pause-hiver"
+          },
+          {
+            "du": "04-16",
+            "au": "10-31",
+            "oh": "Mo-Su 10:00-22:00"
+          }
+        ],
+        "variable": true
+      },
+      "source": "https://www.bordeaux-tourisme.com/sites-monuments/miroir-eau-place-bourse",
+      "lien": "https://www.bordeaux-tourisme.com/sites-monuments/miroir-eau-place-bourse",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "20 min",
+      "notes": "Arrêté pour maintenance « de novembre à avril » ; remise en eau vers la mi-avril selon la météo (date exacte non publiée). Gratuit. Le badge doit dire « en pause pour l'hiver » plutôt que « fermé »."
+    },
+    {
+      "id": "bassins-a-flot",
+      "nom": "Bassins à flot",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.8676,
+      "lon": -0.55815,
+      "osm": "n8755427977",
+      "adresse": "Quai Armand-Lalande, 33300 Bordeaux",
+      "quartier": "Bassins à flot",
+      "description": "Les anciens bassins du port, entourés d'un quartier tout neuf : bateaux amarrés, vieilles grues, la base sous-marine et le musée Mer Marine. Une balade au bord de l'eau, loin de la foule du centre.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "24/7"
+          }
+        ]
+      },
+      "source": null,
+      "lien": null,
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h",
+      "notes": "Espace public (quais, anciens bassins du port) : pas d'horaires. Regroupe le musée Mer Marine, les Bassins des Lumières et, à deux pas, Cap Sciences et la Cité du Vin. Lien officiel à choisir (Bordeaux Tourisme ?)."
+    },
+    {
+      "id": "bato",
+      "nom": "Le Bato (navette fluviale, ex-BatCub)",
+      "categories": [
+        "famille"
+      ],
+      "lat": 44.8455,
+      "lon": -0.57,
+      "osm": null,
+      "adresse": "Ponton Quinconces, quai Louis-XVIII, 33000 Bordeaux",
+      "quartier": "Quinconces",
+      "description": "La navette fluviale du réseau TBM traverse et longe la Garonne, avec un simple ticket de tram. Une mini-croisière à petit prix pour voir la ville depuis le fleuve, par exemple des Quinconces à Darwin.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo-Su 07:00-19:00"
+          }
+        ],
+        "variable": true
+      },
+      "source": "https://fr.wikipedia.org/wiki/Le_Bato",
+      "lien": "https://www.infotbm.com/",
+      "pmr": null,
+      "age": "tout âge",
+      "duree": "30 min à 1 h",
+      "notes": "Le BatCub s'appelle désormais Le Bato. Ligne 2 : Les Hangars – Bastide-Darwin – Quinconces – Stalingrad. Ligne 1 : Lormont-Bas – Cité du Vin. Ticket TBM ordinaire. Horaires tirés de Wikipédia : à confirmer sur infotbm.com."
+    },
+    {
+      "id": "sainte-catherine",
+      "nom": "Rue Sainte-Catherine",
+      "categories": [
+        "shopping"
+      ],
+      "lat": 44.8384,
+      "lon": -0.5737,
+      "osm": "w23134780",
+      "adresse": "Rue Sainte-Catherine, 33000 Bordeaux",
+      "quartier": "Centre",
+      "description": "L'une des plus longues rues commerçantes piétonnes d'Europe : plus d'un kilomètre de boutiques entre la place de la Comédie et la place de la Victoire. Grandes enseignes au nord, boutiques plus variées vers le sud.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo-Sa 10:00-19:00"
+          }
+        ],
+        "indicatif": true
+      },
+      "source": null,
+      "lien": "https://www.bordeaux-tourisme.com/",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h à 2 h",
+      "notes": "Rue piétonne de plus d'1 km entre la place de la Comédie et la place de la Victoire. Pas d'horaires communs : horaires indicatifs des boutiques, sans badge « ouvert maintenant »."
+    },
+    {
+      "id": "meriadeck",
+      "nom": "Centre commercial Mériadeck",
+      "categories": [
+        "shopping"
+      ],
+      "lat": 44.83866,
+      "lon": -0.58494,
+      "osm": "w30770910",
+      "adresse": "57 rue du Château-d'Eau, 33000 Bordeaux",
+      "quartier": "Mériadeck",
+      "description": "Le grand centre commercial couvert du centre-ville, avec un hypermarché, des dizaines de boutiques et des restaurants. Pratique par temps de pluie, directement sur la ligne A du tram.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo-Sa 10:00-20:00"
+          }
+        ]
+      },
+      "source": "https://www.meriadeck.com/",
+      "lien": "https://www.meriadeck.com/",
+      "pmr": null,
+      "age": "tout âge",
+      "duree": "1 h à 2 h",
+      "notes": "Boutiques 10 h–20 h, Auchan 8 h 30–21 h 30, restaurants 11 h–23 h ; certaines boutiques ouvrent le dimanche (horaires non publiés)."
+    },
+    {
+      "id": "grands-hommes",
+      "nom": "Galerie des Grands Hommes",
+      "categories": [
+        "shopping"
+      ],
+      "lat": 44.843,
+      "lon": -0.5777,
+      "osm": "w181081272",
+      "adresse": "Place des Grands-Hommes, 33000 Bordeaux",
+      "quartier": "Triangle d'or",
+      "description": "Une galerie ronde coiffée de verre et d'acier, au cœur du Triangle d'or. Épiceries fines, restaurants et boutiques autour d'un patio lumineux ; un marché aux livres se tient le mercredi tout autour.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo-Sa 10:00-19:30"
+          }
+        ]
+      },
+      "source": "https://lesgrandshommes.com/en/useful-information/",
+      "lien": "https://lesgrandshommes.com/",
+      "pmr": null,
+      "age": "tout âge",
+      "duree": "45 min",
+      "notes": "Galerie couverte en verre, surtout épiceries fines et restaurants. Marché aux livres le mercredi autour de la galerie. Horaires lus dans un résumé de recherche : à relire sur la page officielle."
+    },
+    {
+      "id": "triangle-or",
+      "nom": "Cours de l'Intendance et Triangle d'or",
+      "categories": [
+        "shopping"
+      ],
+      "lat": 44.84191,
+      "lon": -0.57718,
+      "osm": "r14578498",
+      "adresse": "Cours de l'Intendance, 33000 Bordeaux",
+      "quartier": "Triangle d'or",
+      "description": "Le quartier chic entre le cours de l'Intendance, le cours Clemenceau et les allées de Tourny, autour du Grand Théâtre. Boutiques de luxe et de créateurs dans de beaux immeubles du XVIIIᵉ siècle, et un manège sur les allées de Tourny.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo-Sa 10:00-19:00"
+          }
+        ],
+        "indicatif": true
+      },
+      "source": null,
+      "lien": "https://www.bordeaux-tourisme.com/",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h",
+      "notes": "Quartier entre le cours de l'Intendance, le cours Clemenceau et les allées de Tourny : boutiques de luxe et de créateurs. Horaires indicatifs, sans badge."
+    },
+    {
+      "id": "notre-dame",
+      "nom": "Rue Notre-Dame (antiquaires, Chartrons)",
+      "categories": [
+        "shopping"
+      ],
+      "lat": 44.85178,
+      "lon": -0.57123,
+      "osm": "w193333247",
+      "adresse": "Rue Notre-Dame, 33000 Bordeaux",
+      "quartier": "Chartrons",
+      "description": "La rue des antiquaires, au cœur des Chartrons, l'ancien quartier des négociants en vin. Brocantes, décoration, cafés et petites boutiques, à parcourir sans se presser.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Tu-Sa 10:30-19:00"
+          }
+        ],
+        "indicatif": true
+      },
+      "source": null,
+      "lien": "https://www.bordeaux-tourisme.com/",
+      "pmr": true,
+      "age": "tout âge",
+      "duree": "1 h",
+      "notes": "Antiquaires, brocantes, boutiques de déco et cafés. Horaires indicatifs (beaucoup de boutiques fermées le lundi), sans badge."
+    },
+    {
+      "id": "capucins",
+      "nom": "Marché des Capucins",
+      "categories": [
+        "shopping"
+      ],
+      "lat": 44.83044,
+      "lon": -0.56779,
+      "osm": "w116175344",
+      "adresse": "Place des Capucins, 33800 Bordeaux",
+      "quartier": "Capucins – Saint-Michel",
+      "description": "Le « ventre de Bordeaux » : un grand marché couvert où l'on fait ses courses et où l'on mange des huîtres au comptoir, surtout le week-end. Ouvert le matin seulement, fermé le lundi.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Tu-Fr 06:00-14:00; Sa,Su 05:30-14:30"
+          }
+        ]
+      },
+      "source": "https://www.marchedescapucins.com/",
+      "lien": "https://www.marchedescapucins.com/",
+      "pmr": null,
+      "age": "tout âge",
+      "duree": "45 min",
+      "notes": "Le « ventre de Bordeaux ». Fermé le lundi. Le plus proche de l'hôtel (environ 1,3 km)."
+    },
+    {
+      "id": "darwin",
+      "nom": "Darwin",
+      "categories": [
+        "shopping",
+        "famille"
+      ],
+      "lat": 44.84918,
+      "lon": -0.56241,
+      "osm": "n4315508304",
+      "adresse": "87 quai des Queyries, 33100 Bordeaux",
+      "quartier": "La Bastide",
+      "description": "Une ancienne caserne de la rive droite devenue lieu alternatif : épicerie et restaurant bio, boutiques, Emmaüs, librairie, street art et l'un des plus grands skateparks couverts de France.",
+      "horaires": {
+        "periodes": [
+          {
+            "oh": "Mo,Tu,Th 08:00-19:30; We 08:00-24:00; Fr 08:00-23:30; Sa 09:00-23:30; Su 09:00-19:30"
+          }
+        ],
+        "indicatif": true
+      },
+      "source": "https://darwin.camp/non-classe/horaires/",
+      "lien": "https://darwin.camp/",
+      "pmr": null,
+      "age": "tout âge",
+      "duree": "1 h à 2 h",
+      "notes": "Friche militaire reconvertie : boutiques, épicerie bio, librairie, Emmaüs, skatepark couvert (Hangar Darwin, mardi à dimanche après-midi), street art. Pas d'horaires communs : on prend ceux du Magasin Général. Escale Bato « Bastide-Darwin »."
+    }
+  ]
+}

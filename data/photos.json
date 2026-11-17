@@ -1,0 +1,186 @@
+{
+ "musee-aquitaine": {
+  "src": "img/lieux/musee-aquitaine.webp",
+  "mini": "img/lieux/musee-aquitaine-mini.webp",
+  "legende": "L'entrée du musée, cours Pasteur",
+  "auteur": "Tiraden",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_Aquitaine.JPG"
+ },
+ "musba": {
+  "src": "img/lieux/musba.webp",
+  "mini": "img/lieux/musba-mini.webp",
+  "legende": "Le musée des Beaux-Arts dans le jardin de la mairie",
+  "auteur": "Michel BUZE",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Beaux_arts_bordeaux.jpg"
+ },
+ "capc": {
+  "src": "img/lieux/capc.webp",
+  "mini": "img/lieux/capc-mini.webp",
+  "legende": "L'entrepôt Lainé, ancien entrepôt de denrées coloniales",
+  "auteur": "Captaintapas",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Entrep%C3%B4t_Lain%C3%A9.JPG"
+ },
+ "madd": {
+  "src": "img/lieux/madd.webp",
+  "mini": "img/lieux/madd-mini.webp",
+  "legende": "L'hôtel de Lalande, rue Bouffard",
+  "auteur": "Dark Attsios",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9e_des_arts_d%C3%A9coratifs_de_Bordeaux.jpg"
+ },
+ "douanes": {
+  "src": "img/lieux/douanes.webp",
+  "mini": "img/lieux/douanes-mini.webp",
+  "legende": "Le musée, place de la Bourse",
+  "auteur": "JPI",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Le_Mus%C3%A9e_des_Douanes_de_Bordeaux_-_vue_2.jpg"
+ },
+ "mer-marine": {
+  "src": "img/lieux/mer-marine.webp",
+  "mini": "img/lieux/mer-marine-mini.webp",
+  "legende": "Une maquette de navire dans les salles du musée",
+  "auteur": "Dadanard",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:FrII.jpg"
+ },
+ "bassins-lumieres": {
+  "src": "img/lieux/bassins-lumieres.webp",
+  "mini": "img/lieux/bassins-lumieres-mini.webp",
+  "legende": "Une exposition projetée dans la base sous-marine",
+  "auteur": "Benreis",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bassins_de_Lumi%C3%A8res_Boreaux_2024_(1).jpg"
+ },
+ "cap-sciences": {
+  "src": "img/lieux/cap-sciences.webp",
+  "mini": "img/lieux/cap-sciences-mini.webp",
+  "legende": "Cap Sciences au bord de la Garonne",
+  "auteur": "Pierre Baudier",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Cap_Sciences_%C3%A0_Bordeaux_par_Pierre_Baudier.jpg"
+ },
+ "cite-du-vin": {
+  "src": "img/lieux/cite-du-vin.webp",
+  "mini": "img/lieux/cite-du-vin-mini.webp",
+  "legende": "La Cité du Vin et le Bato sur la Garonne",
+  "auteur": "Anthony Levrot",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_-_33100_-_2026.07.04_-_Le_Bato_-_Inter-Rives_Bordeaux_-_%C2%AB_La_Fauvette_%C2%BB_devant_la_Cit%C3%A9_du_Vin_%C2%A9_Anthony_Levrot.jpg"
+ },
+ "museum": {
+  "src": "img/lieux/museum.webp",
+  "mini": "img/lieux/museum-mini.webp",
+  "legende": "Le Muséum, au bord du Jardin public",
+  "auteur": "Dark Attsios",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Mus%C3%A9um_d%27histoire_naturelle_de_Bordeaux.jpg"
+ },
+ "jardin-public": {
+  "src": "img/lieux/jardin-public.webp",
+  "mini": "img/lieux/jardin-public-mini.webp",
+  "legende": "La pièce d’eau et son pont",
+  "auteur": "Marc Ryckaert (MJJR)",
+  "licence": "CC BY 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_Jardin_Public_R02.jpg"
+ },
+ "jardin-botanique": {
+  "src": "img/lieux/jardin-botanique.webp",
+  "mini": "img/lieux/jardin-botanique-mini.webp",
+  "legende": "Le jardin botanique de la Bastide",
+  "auteur": "J W (Flickr)",
+  "licence": "CC BY-SA 2.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Jardin_botanique_de_Bordeaux_5.jpg"
+ },
+ "parc-angeliques": {
+  "src": "img/lieux/parc-angeliques.webp",
+  "mini": "img/lieux/parc-angeliques-mini.webp",
+  "legende": "Un kiosque du parc, sur la rive droite",
+  "auteur": "Romainbehar",
+  "licence": "CC0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_-_Parc_aux_Ang%C3%A9liques_-_Le_Puits_-_Biblioth%C3%A8que_sur_la_technique.jpg"
+ },
+ "miroir-eau": {
+  "src": "img/lieux/miroir-eau.webp",
+  "mini": "img/lieux/miroir-eau-mini.webp",
+  "legende": "L’effet brouillard devant la place de la Bourse",
+  "auteur": "Pline",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:XDSC_7643-Effet-brouillard-Miroir-d-eau-quai-de-la-Gironde.jpg"
+ },
+ "bassins-a-flot": {
+  "src": "img/lieux/bassins-a-flot.webp",
+  "mini": "img/lieux/bassins-a-flot-mini.webp",
+  "legende": "Les bassins à flot et leurs nouveaux quartiers",
+  "auteur": "Zairon",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_Bassin_%C3%A0_Flot_06.jpg"
+ },
+ "bato": {
+  "src": "img/lieux/bato.webp",
+  "mini": "img/lieux/bato-mini.webp",
+  "legende": "Le Bato devant le pont de pierre",
+  "auteur": "Anthony Levrot",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_-_33000_-_2026.07.03_-_Le_Bato_-_Inter-Rives_Bordeaux_-_%C2%AB_La_Sittelle_%C2%BB_%C2%A9_Anthony_Levrot.jpg"
+ },
+ "sainte-catherine": {
+  "src": "img/lieux/sainte-catherine.webp",
+  "mini": "img/lieux/sainte-catherine-mini.webp",
+  "legende": "La rue Sainte-Catherine, piétonne",
+  "auteur": "Langladure",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_rue_Sainte-Catherine_2009.JPG"
+ },
+ "meriadeck": {
+  "src": "img/lieux/meriadeck.webp",
+  "mini": "img/lieux/meriadeck-mini.webp",
+  "legende": "L'entrée du centre commercial",
+  "auteur": "AirScott",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:CC_m%C3%A9riadeck.jpg"
+ },
+ "grands-hommes": {
+  "src": "img/lieux/grands-hommes.webp",
+  "mini": "img/lieux/grands-hommes-mini.webp",
+  "legende": "L'intérieur de la galerie",
+  "auteur": "Cjp24",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:March%C3%A9_des_Grands_Hommes,_Bordeaux.jpg"
+ },
+ "triangle-or": {
+  "src": "img/lieux/triangle-or.webp",
+  "mini": "img/lieux/triangle-or-mini.webp",
+  "legende": "Les allées de Tourny et leur manège",
+  "auteur": "Bordeaux at German Wikipedia",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux_Allees_Tourny.JPG"
+ },
+ "notre-dame": {
+  "src": "img/lieux/notre-dame.webp",
+  "mini": "img/lieux/notre-dame-mini.webp",
+  "legende": "Le Passage Notre-Dame, antiquités et brocante",
+  "auteur": "Ardfern",
+  "licence": "CC BY-SA 3.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Le_Passage_Notre_Dame,_Bordeaux,_July_2014_(01).JPG"
+ },
+ "capucins": {
+  "src": "img/lieux/capucins.webp",
+  "mini": "img/lieux/capucins-mini.webp",
+  "legende": "Les étals du marché",
+  "auteur": "Benreis",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:March%C3%A9_des_Capucins_2024_(4).jpg"
+ },
+ "darwin": {
+  "src": "img/lieux/darwin.webp",
+  "mini": "img/lieux/darwin-mini.webp",
+  "legende": "L'entrée de Darwin, dans l'ancienne caserne Niel",
+  "auteur": "Ji-Elle",
+  "licence": "CC BY-SA 4.0",
+  "source": "https://commons.wikimedia.org/wiki/File:Bordeaux-Quartier_Darwin_(7).jpg"
+ }
+}
