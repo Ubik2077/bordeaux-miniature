@@ -9,9 +9,12 @@
 import * as THREE from '../vendor/three.module.min.js';
 
 const ORIGINE = [-0.5675, 44.8485]; // centre de la zone
-const MX = 111320 * Math.cos((44.84 * Math.PI) / 180), MY = 110540;
 const EXAG = 1.6; // hauteurs exagérées, comme sur une maquette
-const loc = ([lon, lat]) => new THREE.Vector2((lon - ORIGINE[0]) * MX, (lat - ORIGINE[1]) * MY);
+// position exacte : on passe par les coordonnées Mercator de MapLibre (une simple conversion en mètres par degré
+// décalait les bâtiments d'environ 0,7 % de leur distance au centre, soit près de 20 m aux bassins à flot,
+// un écart qui devenait visible en zoomant)
+const MERC0 = maplibregl.MercatorCoordinate.fromLngLat(ORIGINE, 0), ECHELLE = MERC0.meterInMercatorCoordinateUnits();
+const loc = (p) => { const m = maplibregl.MercatorCoordinate.fromLngLat(p, 0); return new THREE.Vector2((m.x - MERC0.x) / ECHELLE, (MERC0.y - m.y) / ECHELLE); };
 const anneauLocal = (a) => { const r = a.map(loc); if (r.length > 1 && r[0].distanceTo(r[r.length - 1]) < 0.01) r.pop(); return r; };
 
 // ---------- matériaux ----------
@@ -401,9 +404,12 @@ export function coucheMonuments(D) {
   const ciel = new THREE.HemisphereLight('#fff6e6', '#b9a37c', 1.9); ciel.position.set(0, 0, 1);
   scene.add(ciel, new THREE.AmbientLight('#ffffff', 0.25));
 
+  // repère du soleil (celui de sa caméra d'ombre), pour caler la zone d'ombre sur sa grille de pixels
+  const DIRECTION_SOLEIL = new THREE.Vector3(-560, -420, 330);
+  const depuisSoleil = new THREE.Matrix4().lookAt(DIRECTION_SOLEIL, new THREE.Vector3(), new THREE.Object3D().up);
+  const versSoleil = depuisSoleil.clone().invert();
   const camera = new THREE.Camera();
-  const merc = maplibregl.MercatorCoordinate.fromLngLat(ORIGINE, 0), s = merc.meterInMercatorCoordinateUnits();
-  const placementCarte = new THREE.Matrix4().makeTranslation(merc.x, merc.y, merc.z).scale(new THREE.Vector3(s, -s, s));
+  const placementCarte = new THREE.Matrix4().makeTranslation(MERC0.x, MERC0.y, MERC0.z).scale(new THREE.Vector3(ECHELLE, -ECHELLE, ECHELLE));
   let rendu = null, carte = null;
   return {
     id: 'monuments-3d', type: 'custom', renderingMode: '3d',
@@ -415,8 +421,14 @@ export function coucheMonuments(D) {
     },
     render(gl, matrice) {
       // la zone de calcul des ombres suit la vue : nettes de près, toujours présentes de loin
-      const c = loc(carte.getCenter().toArray()), r = Math.min(3200, Math.max(350, 700 * Math.pow(2, 16 - carte.getZoom())));
-      soleil.target.position.set(c.x, c.y, 0); soleil.position.set(c.x - 560, c.y - 420, 330);
+      // la taille de la zone ne change que par paliers et son centre est calé sur la grille des pixels d'ombre :
+      // sinon les contours des ombres « nagent » à chaque mouvement de la carte
+      const r = Math.min(3200, 350 * Math.pow(2, Math.max(0, Math.ceil(16 - carte.getZoom() + 1))));
+      const texel = (2 * r) / soleil.shadow.mapSize.x, brut = loc(carte.getCenter().toArray());
+      const c = new THREE.Vector3(brut.x, brut.y, 0).applyMatrix4(versSoleil);   // dans le repère du soleil
+      c.x = Math.round(c.x / texel) * texel; c.y = Math.round(c.y / texel) * texel;
+      c.applyMatrix4(depuisSoleil);
+      soleil.target.position.copy(c); soleil.position.copy(c).add(DIRECTION_SOLEIL);
       Object.assign(soleil.shadow.camera, { left: -r, right: r, top: r, bottom: -r });
       soleil.shadow.camera.updateProjectionMatrix(); soleil.target.updateMatrixWorld();
       camera.projectionMatrix = new THREE.Matrix4().fromArray(matrice).multiply(placementCarte);
