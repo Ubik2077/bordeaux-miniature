@@ -257,11 +257,24 @@ map.on('load', () => {
   $('geo').addEventListener('click', () => localiser($('geo').getAttribute('aria-pressed') !== 'true'));
   for (const ev of ['fiche-fermer', 'liste-fermer']) $(ev).addEventListener('click', () => setTimeout(majProche, 0));
 
+  // ---------- nos autres cartes : la langue choisie suit (lien « ?lang=xx ») ----------
+  const btnCartes = $('btn-cartes'), menuCartes = $('menu-cartes');
+  function cartesOuvert(o) {
+    menuCartes.hidden = !o; btnCartes.setAttribute('aria-expanded', String(o));
+    if (!o) return;
+    menuOuvert(false);
+    for (const a of menuCartes.querySelectorAll('[data-carte]')) { const u = new URL(a.href); u.searchParams.set('lang', getLang()); a.href = u.href; }
+  }
+  btnCartes.addEventListener('click', (e) => { e.stopPropagation(); cartesOuvert(menuCartes.hidden); });
+  document.addEventListener('click', (e) => { if (!menuCartes.hidden && !e.target.closest('.autres')) cartesOuvert(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menuCartes.hidden) { cartesOuvert(false); btnCartes.focus(); } });
+
   // ---------- langues : menu, langue du téléphone détectée au premier lancement ----------
   const btnLangue = $('btn-langue'), menuLangue = $('menu-langue');
   const majBoutonLangue = () => { btnLangue.textContent = `${getLang().toUpperCase()} ▾`; btnLangue.setAttribute('aria-label', `${t('langue.titre')} (${getLang().toUpperCase()})`); };
   function menuOuvert(o) {
     menuLangue.hidden = !o; btnLangue.setAttribute('aria-expanded', String(o));
+    if (o && !menuCartes.hidden) cartesOuvert(false);
     if (o) menuLangue.innerHTML = LANGS.map((l) => `<button role="menuitemradio" aria-checked="${l.code === getLang()}" data-lang="${l.code}" lang="${l.code}"><span>${l.flag}</span>${l.name}</button>`).join('');
   }
   btnLangue.addEventListener('click', (e) => { e.stopPropagation(); menuOuvert(menuLangue.hidden); });

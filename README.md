@@ -39,9 +39,9 @@ Cité du Vin trop basse, monuments réarrangés librement.
 
 ## Reste à faire
 
-Liens vers les deux autres cartes, mise en ligne (dépôt bordeaux-miniature).
+Mise en ligne (dépôt bordeaux-miniature).
 
-Fait : fiches (photo créditée, état d'ouverture, description, trajets, infos pratiques), liste repliable,
+Fait : menu « Nos autres cartes » au pied du cartouche (la langue suit, `?lang=xx`), fiches (photo créditée, état d'ouverture, description, trajets, infos pratiques), liste repliable,
 filtres par catégorie, médaillons ternis quand le lieu est fermé, tracé des trajets à pied et en tram ;
 menu des 5 langues, « vous êtes ici » et lieu le plus proche, mode hors ligne (`sw.js`, testé serveur coupé),
 ajout à l'écran d'accueil (`manifest.webmanifest`, icônes : `python3 scripts/icones.py`).

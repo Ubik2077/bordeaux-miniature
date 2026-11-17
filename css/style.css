@@ -176,6 +176,16 @@ body.fiche-ouverte .cartouche { display: none; }
 .menu-langue button:hover { background: rgba(205, 187, 151, .25); }
 .menu-langue button[aria-checked="true"] { background: var(--encre); color: var(--papier-clair); }
 
+/* nos autres cartes : lien discret au pied du cartouche, menu qui s'ouvre vers le haut */
+.cartouche .autres { position: relative; margin-top: 7px; padding-top: 6px; border-top: 1px solid rgba(140, 110, 70, .3); }
+#btn-cartes { padding: 2px 0; border: 0; background: none; font: italic 600 14px/1 var(--titre); color: var(--vin); cursor: pointer; }
+#btn-cartes:hover span, #btn-cartes[aria-expanded="true"] span { text-decoration: underline; text-underline-offset: 3px; }
+.menu-cartes { left: -10px; right: auto; top: auto; bottom: calc(100% + 10px); min-width: 230px; gap: 2px; }
+.menu-cartes a { display: flex; flex-direction: column; gap: 3px; padding: 8px 10px; border-radius: 3px; color: var(--encre); text-decoration: none; }
+.menu-cartes a b { font: 700 17px/1.05 var(--titre); }
+.menu-cartes a span { font-size: 12px; color: var(--encre-douce); }
+.menu-cartes a:hover, .menu-cartes a:focus-visible { background: rgba(205, 187, 151, .25); }
+
 /* ---------- vous êtes ici ---------- */
 .geo { position: absolute; z-index: 3; right: 18px; bottom: 84px; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--filet);
   background: rgba(246, 238, 220, .95); color: var(--encre); cursor: pointer; box-shadow: 0 3px 8px rgba(40, 25, 10, .25); display: flex; align-items: center; justify-content: center; }
