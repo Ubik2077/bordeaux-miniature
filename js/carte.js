@@ -4,7 +4,7 @@ import { deplier, points } from './compact.js';
 import { coucheMonuments } from './monuments3d.js';
 import { chargerVacances, statut } from './horaires.js';
 import { afficherFiche, fermerFiche, badgeStatut, puce, echap } from './fiche.js';
-import { t, tLieu, setLang, getLang, applyStatic } from './i18n.js';
+import { LANGS, t, tLieu, setLang, getLang, applyStatic } from './i18n.js';
 
 const charger = (u) => fetch(u).then((r) => r.json());
 const [fond, batis, { lieux, hotel, verifie }, photos, vacances, { lieux: trajets }] = await Promise.all(
@@ -43,6 +43,8 @@ const map = new maplibregl.Map({
   attributionControl: false,
 });
 map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribution: 'IGN BD TOPO · © OpenStreetMap' }));
+window.carteBM = map; // accès depuis la console, pour les essais
+map.on('error', (e) => console.error('carte :', e.error || e));
 
 map.on('load', () => {
   map.addImage('papier', papier());
@@ -150,6 +152,7 @@ map.on('load', () => {
     choisi = id;
     const md = medaillons.get(id), l = md.l;
     md.el.classList.add('choisi');
+    $('proche').hidden = true;
     afficherFiche(l, { photo: photos[id], verifie, trajet: trajets[id], onTrajet: (mode) => montrerTrajet(id, mode), garderDefilement });
     document.body.classList.add('fiche-ouverte');
     if (centrer) {
@@ -167,6 +170,7 @@ map.on('load', () => {
     if (choisi) medaillons.get(choisi).el.classList.remove('choisi');
     choisi = null;
     placer();
+    majProche();
   }
   $('fiche-fermer').addEventListener('click', fermer);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { fermerListe(); fermer(); } });
@@ -261,9 +265,82 @@ map.on('load', () => {
     });
   }
 
+  // ---------- « vous êtes ici » : position du visiteur et lieu le plus proche ----------
+  const distance = (a, b) => new maplibregl.LngLat(a[0], a[1]).distanceTo(new maplibregl.LngLat(b[0], b[1])); // en mètres
+  let ici = null, suivi = null, pointIci = null, dejaCentre = false, minuterie = null;
+  function message(texte) {
+    $('message').textContent = texte; $('message').hidden = false;
+    clearTimeout(minuterie); minuterie = setTimeout(() => { $('message').hidden = true; }, 5000);
+  }
+  function majProche() {
+    if (!ici || choisi || trajetAffiche) { $('proche').hidden = true; return; }
+    let best = null;
+    for (const l of lieux) if (visible(l)) { const d = distance(ici, [l.lon, l.lat]); if (!best || d < best.d) best = { l, d }; }
+    if (!best) { $('proche').hidden = true; return; }
+    $('proche').innerHTML = `<span>${t('geo.proche')} <b>${echap(tLieu(best.l, 'nom'))}</b> · ${t('geo.temps', { n: Math.max(1, Math.round((best.d * 1.3) / 70)) })}</span><button id="voir-proche">${t('geo.voir')}</button>`;
+    $('proche').hidden = false;
+    $('voir-proche').addEventListener('click', () => ouvrir(best.l.id));
+  }
+  function localiser(actif) {
+    $('geo').setAttribute('aria-pressed', String(actif));
+    if (!actif) {
+      if (suivi != null) navigator.geolocation.clearWatch(suivi);
+      suivi = null; ici = null; dejaCentre = false; pointIci?.remove(); pointIci = null; majProche();
+      return;
+    }
+    if (!navigator.geolocation) { message(t('geo.indispo')); return localiser(false); }
+    suivi = navigator.geolocation.watchPosition((pos) => {
+      const p = [pos.coords.longitude, pos.coords.latitude];
+      if (p[0] < B.o || p[0] > B.e || p[1] < B.s || p[1] > B.n) { message(t('geo.loin')); return localiser(false); }
+      ici = p;
+      if (!pointIci) {
+        const el = document.createElement('div'); el.className = 'ici'; el.title = t('geo.ici');
+        el.innerHTML = '<span class="halo"></span><span class="point"></span>';
+        pointIci = new maplibregl.Marker({ element: el }).setLngLat(p).addTo(map);
+      } else pointIci.setLngLat(p);
+      if (!dejaCentre) { dejaCentre = true; map.easeTo({ center: p, zoom: Math.max(map.getZoom(), 16), duration: 1000 }); }
+      majProche();
+    }, (err) => { message(t(err.code === 1 ? 'geo.refus' : 'geo.indispo')); localiser(false); },
+    { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 });
+  }
+  $('geo').addEventListener('click', () => localiser($('geo').getAttribute('aria-pressed') !== 'true'));
+  for (const ev of ['fiche-fermer', 'liste-fermer']) $(ev).addEventListener('click', () => setTimeout(majProche, 0));
+
+  // ---------- langues : menu, langue du téléphone détectée au premier lancement ----------
+  const btnLangue = $('btn-langue'), menuLangue = $('menu-langue');
+  const majBoutonLangue = () => { btnLangue.textContent = `${getLang().toUpperCase()} ▾`; btnLangue.setAttribute('aria-label', `${t('langue.titre')} (${getLang().toUpperCase()})`); };
+  function menuOuvert(o) {
+    menuLangue.hidden = !o; btnLangue.setAttribute('aria-expanded', String(o));
+    if (o) menuLangue.innerHTML = LANGS.map((l) => `<button role="menuitemradio" aria-checked="${l.code === getLang()}" data-lang="${l.code}" lang="${l.code}"><span>${l.flag}</span>${l.name}</button>`).join('');
+  }
+  btnLangue.addEventListener('click', (e) => { e.stopPropagation(); menuOuvert(menuLangue.hidden); });
+  document.addEventListener('click', (e) => { if (!menuLangue.hidden && !e.target.closest('.langue')) menuOuvert(false); });
+  menuLangue.addEventListener('click', async (e) => {
+    const b = e.target.closest('[data-lang]'); if (!b) return;
+    menuOuvert(false);
+    await setLang(b.dataset.lang);
+    traduire();
+  });
+  // réécrit tout ce qui est affiché, sans bouger la carte
+  function traduire() {
+    applyStatic();
+    majBoutonLangue();
+    for (const [id, md] of medaillons) {
+      const nom = md.el.querySelector('.nom');
+      nom.textContent = id === 'hotel' ? t('hotel.nom') : tLieu(md.l, 'nom').replace(/ \(.*\)$/, '');
+    }
+    if (pointIci) pointIci.getElement().title = t('geo.ici');
+    if (!$('liste').hidden) remplirListe();
+    if (trajetAffiche) barreTrajet();
+    else if (choisi) ouvrir(choisi, { centrer: false, garderDefilement: true });
+    majProche();
+    placer();
+  }
+  majBoutonLangue();
+
   placer();
   majEtats();
   setInterval(majEtats, 60000);
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
   map.once('idle', () => $('chargement').classList.add('fini'));
-  window.carteBM = map; // essais
 });

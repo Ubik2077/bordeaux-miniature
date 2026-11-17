@@ -4,6 +4,9 @@ export default {
   ui: {
     'doc.titre': 'Bordeaux Miniature · museos, familias, compras',
     'langue.titre': 'Cambiar de idioma',
+    'cartouche.sous': "Museos · Familias · Compras",
+    'chargement': "Dibujando Burdeos…",
+    'rose': "Volver a poner el norte arriba",
     'inventaire.aria': 'Categorías',
     'cats.musee': 'Museos', 'cats.famille': 'Familia', 'cats.shopping': 'Compras', 'cats.liste': 'Lista',
     'cat.musee': 'Museo', 'cat.famille': 'Familia', 'cat.shopping': 'Compras',

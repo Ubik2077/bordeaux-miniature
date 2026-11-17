@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bordeaux Miniature</title>
 <meta name="theme-color" content="#5a3b22">
+<meta name="description" content="Carte de Bordeaux façon maquette : musées, sorties en famille et shopping, avec les trajets depuis l'hôtel.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="img/icone-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/icone-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Bordeaux Miniature">
 <link rel="stylesheet" href="vendor/maplibre-gl.css">
 <link rel="stylesheet" href="css/polices.css">
 <link rel="stylesheet" href="css/style.css">
@@ -15,9 +21,10 @@
   <div class="flou haut"></div><div class="flou bas"></div><div class="lumiere"></div><div class="vignette"></div>
   <div class="cartouche">
     <h1>BORDEAUX<span>Miniature</span></h1>
-    <p class="region">Musées · Familles · Shopping</p>
+    <p class="region" data-i18n="cartouche.sous">Musées · Familles · Shopping</p>
   </div>
-  <button class="rose" id="rose" aria-label="Remettre le nord en haut">
+  <button class="geo" id="geo" aria-pressed="false" aria-label="Me localiser" data-i18n-aria="geo.bouton"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.2"/><circle cx="12" cy="12" r="7.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3"/></svg></button>
+  <button class="rose" id="rose" aria-label="Remettre le nord en haut" data-i18n-aria="rose">
     <svg viewBox="0 0 100 100" aria-hidden="true">
       <circle cx="50" cy="50" r="30" fill="rgba(244,235,215,.7)" stroke="#2f2a24" stroke-width="1"/>
       <circle cx="50" cy="50" r="36" fill="none" stroke="#2f2a24" stroke-width=".5"/>
@@ -32,6 +39,12 @@
     <button class="etiquette-papier" data-cat="famille" aria-pressed="true" style="--c:#4f8a46"><i></i><span data-i18n="cats.famille">Famille</span></button>
     <button class="etiquette-papier" data-cat="shopping" aria-pressed="true" style="--c:#d9772f"><i></i><span data-i18n="cats.shopping">Shopping</span></button>
   </nav>
+  <div class="langue">
+    <button id="btn-langue" class="etiquette-papier" aria-haspopup="true" aria-expanded="false">FR ▾</button>
+    <div class="menu-langue" id="menu-langue" role="menu" hidden></div>
+  </div>
+  <div id="proche" class="barre-trajet proche" hidden></div>
+  <div id="message" class="message" role="status" hidden></div>
   <aside id="liste" class="panneau panneau-liste" aria-labelledby="liste-titre" hidden>
     <button id="liste-fermer" class="fermer" aria-label="Fermer la liste" data-i18n-aria="liste.fermer">✕</button>
     <h2 id="liste-titre" data-i18n="liste.titre">Les lieux</h2>
@@ -44,7 +57,7 @@
     <div id="fiche-corps" class="corps"></div>
   </aside>
   <div id="barre-trajet" class="barre-trajet" hidden></div>
-  <div class="chargement" id="chargement">Bordeaux se dessine…</div>
+  <div class="chargement" id="chargement" data-i18n="chargement">Bordeaux se dessine…</div>
 </div>
 <script src="vendor/maplibre-gl.js"></script>
 <script type="module" src="js/carte.js"></script>

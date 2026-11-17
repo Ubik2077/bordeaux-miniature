@@ -15,6 +15,9 @@ export const LANGS = [
 const FR = {
   'doc.titre': 'Bordeaux Miniature · musées, familles, shopping',
   'langue.titre': 'Changer de langue',
+  'cartouche.sous': "Musées · Familles · Shopping",
+  'chargement': "Bordeaux se dessine…",
+  'rose': "Remettre le nord en haut",
   'inventaire.aria': 'Catégories',
   'cats.musee': 'Musées', 'cats.famille': 'Famille', 'cats.shopping': 'Shopping', 'cats.liste': 'Liste',
   'cat.musee': 'Musée', 'cat.famille': 'Famille', 'cat.shopping': 'Shopping',

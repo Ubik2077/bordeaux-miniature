@@ -4,6 +4,9 @@ export default {
   ui: {
     'doc.titre': 'Bordeaux Miniature · museums, families, shopping',
     'langue.titre': 'Change language',
+    'cartouche.sous': "Museums · Families · Shopping",
+    'chargement': "Drawing Bordeaux…",
+    'rose': "Turn north back up",
     'inventaire.aria': 'Categories',
     'cats.musee': 'Museums', 'cats.famille': 'Family', 'cats.shopping': 'Shopping', 'cats.liste': 'List',
     'cat.musee': 'Museum', 'cat.famille': 'Family', 'cat.shopping': 'Shopping',

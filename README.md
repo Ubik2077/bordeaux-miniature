@@ -30,9 +30,11 @@ python3 -m http.server 8645   # puis http://localhost:8645/
 
 ## Reste à faire
 
-Menu des langues (traductions déjà prêtes dans js/lang), géolocalisation, hors ligne, affiche (inspirée de
+Affiche (inspirée de
 l'affiche « La Rochelle » : ville découpée en île sur une carte papier, bords déchirés, titre espacé, lignes de
 rappel vers les monuments, QR code), liens vers les deux autres cartes, mise en ligne (dépôt bordeaux-miniature).
 
 Fait : fiches (photo créditée, état d'ouverture, description, trajets, infos pratiques), liste repliable,
-filtres par catégorie, médaillons ternis quand le lieu est fermé, tracé des trajets à pied et en tram.
+filtres par catégorie, médaillons ternis quand le lieu est fermé, tracé des trajets à pied et en tram ;
+menu des 5 langues, « vous êtes ici » et lieu le plus proche, mode hors ligne (`sw.js`, testé serveur coupé),
+ajout à l'écran d'accueil (`manifest.webmanifest`, icônes : `python3 scripts/icones.py`).
