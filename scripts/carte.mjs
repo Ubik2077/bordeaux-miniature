@@ -64,6 +64,71 @@ const eauUnie = pc.union(...eau.map((p) => [p])).filter((p) => aireM2(p[0]) > 20
 const terre = pc.difference(cadre, ...eauUnie.map((p) => [p]));
 console.log(`eau : ${eauUnie.length} étendues, terre : ${terre.length} morceaux`);
 
+// ---------- lignes de profondeur : courbes d'égale distance à la rive ----------
+// L'eau est tramée en cases de 4 m, on calcule la distance de chaque case à la rive, puis on trace les courbes
+// de niveau (« marching squares »). Contrairement à de simples décalages du contour, elles ne se croisent
+// jamais, même dans les écluses étroites des bassins à flot : elles s'arrêtent là où l'eau est trop étroite.
+const NIVEAUX = [9, 20, 34, 52, 76]; // mètres depuis la rive
+function isobathes() {
+  const G = 4, L = Math.ceil(((B.e - B.o) * MX) / G), H = Math.ceil(((B.n - B.s) * MY) / G);
+  const eauG = new Uint8Array(L * H);
+  const anneaux = eauUnie.flatMap((p) => p).map((r) => r.map(([x, y]) => [((x - B.o) * MX) / G, ((B.n - y) * MY) / G]));
+  for (let j = 0; j < H; j++) { // remplissage par lignes, règle pair-impair sur tous les anneaux
+    const y = j + 0.5, xs = [];
+    for (const r of anneaux) for (let i = 0, k = r.length - 1; i < r.length; k = i++) {
+      const [x1, y1] = r[k], [x2, y2] = r[i];
+      if ((y1 > y) !== (y2 > y)) xs.push(x1 + ((y - y1) * (x2 - x1)) / (y2 - y1));
+    }
+    xs.sort((a, b) => a - b);
+    for (let n = 0; n + 1 < xs.length; n += 2) for (let i = Math.max(0, Math.ceil(xs[n] - 0.5)); i < Math.min(L, xs[n + 1] - 0.5); i++) eauG[j * L + i] = 1;
+  }
+  // distance à la terre (chanfrein 3-4, à peu près euclidienne) ; le bord de la carte n'est pas une rive
+  const d = new Float32Array(L * H).fill(1e9);
+  for (let i = 0; i < L * H; i++) if (!eauG[i]) d[i] = 0;
+  const pas = [[-1, 0, 1], [0, -1, 1], [-1, -1, Math.SQRT2], [1, -1, Math.SQRT2]];
+  for (let j = 0; j < H; j++) for (let i = 0; i < L; i++) for (const [di, dj, w] of pas) {
+    const a = i + di, b = j + dj; if (a >= 0 && a < L && b >= 0) d[j * L + i] = Math.min(d[j * L + i], d[b * L + a] + w);
+  }
+  for (let j = H - 1; j >= 0; j--) for (let i = L - 1; i >= 0; i--) for (const [di, dj, w] of pas) {
+    const a = i - di, b = j - dj; if (a >= 0 && a < L && b < H) d[j * L + i] = Math.min(d[j * L + i], d[b * L + a] + w);
+  }
+  const versLL = ([x, y]) => [B.o + ((x + 0.5) * G) / MX, B.n - ((y + 0.5) * G) / MY];
+  const sortie = [];
+  NIVEAUX.forEach((m, n) => {
+    const v = m / G, segs = [];
+    const val = (i, j) => Math.min(d[j * L + i], 1e6);
+    const pt = (i1, j1, i2, j2) => { const a = val(i1, j1), b = val(i2, j2), t = (v - a) / (b - a); return [i1 + t * (i2 - i1), j1 + t * (j2 - j1)]; };
+    for (let j = 0; j < H - 1; j++) for (let i = 0; i < L - 1; i++) {
+      const c = (val(i, j) > v ? 8 : 0) | (val(i + 1, j) > v ? 4 : 0) | (val(i + 1, j + 1) > v ? 2 : 0) | (val(i, j + 1) > v ? 1 : 0);
+      if (c === 0 || c === 15) continue;
+      const h = pt(i, j, i + 1, j), dr = pt(i + 1, j, i + 1, j + 1), b = pt(i, j + 1, i + 1, j + 1), g = pt(i, j, i, j + 1);
+      const T = { 1: [[g, b]], 2: [[b, dr]], 3: [[g, dr]], 4: [[h, dr]], 5: [[g, h], [b, dr]], 6: [[h, b]], 7: [[g, h]], 8: [[g, h]], 9: [[h, b]], 10: [[g, b], [h, dr]], 11: [[h, dr]], 12: [[g, dr]], 13: [[b, dr]], 14: [[g, b]] }[c];
+      for (const s of T) segs.push(s);
+    }
+    // raccorde les petits segments en lignes continues
+    const cle = (p) => `${Math.round(p[0] * 100)},${Math.round(p[1] * 100)}`, parBout = new Map();
+    segs.forEach((s, k) => { for (const p of s) { const c = cle(p); (parBout.get(c) || parBout.set(c, []).get(c)).push(k); } });
+    const pris = new Uint8Array(segs.length);
+    for (let k = 0; k < segs.length; k++) {
+      if (pris[k]) continue;
+      pris[k] = 1;
+      const ligne = [...segs[k]];
+      for (const sens of [1, -1]) for (;;) {
+        const bout = sens === 1 ? ligne[ligne.length - 1] : ligne[0];
+        const suivant = (parBout.get(cle(bout)) || []).find((x) => !pris[x]);
+        if (suivant === undefined) break;
+        pris[suivant] = 1;
+        const s = segs[suivant], autre = cle(s[0]) === cle(bout) ? s[1] : s[0];
+        sens === 1 ? ligne.push(autre) : ligne.unshift(autre);
+      }
+      if (ligne.length >= 6) sortie.push(F({ type: 'LineString', coordinates: simplifier(ligne.map(versLL), 1.2) }, { n }));
+    }
+  });
+  return sortie;
+}
+const profondeurs = isobathes();
+console.log(`lignes de profondeur : ${profondeurs.length}`);
+
 // ---------- verdure et arbres ----------
 const parcs = [], arbres = [];
 for (const el of (await lire('osm-vert')).elements) {
@@ -160,6 +225,15 @@ for (const f of (await lire('ign-batiment')).features) {
     } else if (aireM2(a[0]) > 12) plats.push(F({ type: 'Polygon', coordinates: [simplifier(a[0])] })); // abris et kiosques minuscules : ignorés
   }
 }
+// la Cité du Vin est découpée en plusieurs morceaux dans l'IGN : on n'en garde qu'un contour, fusionné
+{
+  const morceaux = batis.filter((b) => b.style === 'cite');
+  if (morceaux.length > 1) {
+    const union = pc.union(...morceaux.map((b) => [b.anneau])).sort((x, y) => aireM2(y[0]) - aireM2(x[0]))[0];
+    const h = Math.max(...morceaux.map((b) => b.h));
+    batis.splice(0, batis.length, ...batis.filter((b) => b.style !== 'cite'), { ...morceaux[0], h, anneau: arrondir(union[0]) });
+  }
+}
 const manquants = cibles.filter((c) => !trouves.has(c.id)).map((c) => c.id);
 for (const [id, cat] of [[79734107, 'shopping'], [79715950, 'shopping'], [1093782523, 'repere'], [79978925, 'repere']]) {
   halos.push(F({ type: 'Polygon', coordinates: [OSM[id]] }, { cat }));
@@ -184,6 +258,7 @@ const fond = {
   cadre: B,
   terre: compacter(terre.map((p) => F({ type: 'Polygon', coordinates: p })), [], S),
   eau: compacter(eauUnie.map((p) => F({ type: 'Polygon', coordinates: p })), [], S),
+  profondeurs: compacter(profondeurs, ['n'], S),
   parcs: compacter(parcs, ['jeux'], S),
   rues: compacter(rues, ['l', 'pont', 'petit'], S),
   fer: compacter(fer, ['n'], S),

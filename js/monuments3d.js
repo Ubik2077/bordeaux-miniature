@@ -50,6 +50,15 @@ const beton = texture(64, 64, (x) => {
   for (let i = 0; i < 400; i++) { x.fillStyle = `rgba(80,70,60,${Math.random() * 0.08})`; x.fillRect(Math.random() * 64, Math.random() * 64, 2, 2); }
 });
 beton.repeat.set(1 / 8, 1 / 8);
+// base sous-marine : béton brut et rangée d'alvéoles sombres au pied (les anciens abris des sous-marins)
+const alveoles = texture(128, 128, (x) => {
+  x.fillStyle = '#b4aea3'; x.fillRect(0, 0, 128, 128);
+  for (let i = 0; i < 500; i++) { x.fillStyle = `rgba(70,60,50,${Math.random() * 0.1})`; x.fillRect(Math.random() * 128, Math.random() * 128, 3, 3); }
+  x.fillStyle = '#a49d92'; x.fillRect(0, 30, 128, 3);
+  x.fillStyle = '#3a3631'; x.fillRect(14, 62, 100, 66);                    // l'alvéole
+  x.fillStyle = '#5a554d'; x.fillRect(14, 62, 100, 6);
+});
+alveoles.repeat.set(1 / 22, 1 / 16);
 const mat = (o) => new THREE.MeshStandardMaterial({ roughness: 0.9, ...o });
 const M = {
   pierre: mat({ color: '#f2e0b9' }),
@@ -67,9 +76,11 @@ const M = {
   vitrages: mat({ map: vitrages, roughness: 0.5 }),
   betonClair: mat({ color: '#ece7dd' }),
   beton: mat({ map: beton }),
+  alveoles: mat({ map: alveoles }),
   betonSombre: mat({ color: '#9c968c' }),
   zinc: mat({ color: '#a3abb3', roughness: 0.55, metalness: 0.2, flatShading: true }),
-  cite: mat({ color: '#d9b45a', roughness: 0.35, metalness: 0.15, emissive: '#7a5a1a', emissiveIntensity: 0.12, flatShading: true }),
+  cite: mat({ color: '#dcb95f', roughness: 0.32, metalness: 0.15, emissive: '#7a5a1a', emissiveIntensity: 0.12 }),
+  verreCite: mat({ color: '#b7c4b8', roughness: 0.15, metalness: 0.25, emissive: '#3a3a26', emissiveIntensity: 0.12 }),
   hotel: mat({ color: '#e4eef3' }),
 };
 
@@ -302,7 +313,7 @@ function moderne(anneau, h, facade = M.vitrages) {
   prisme([c.clone().add(new THREE.Vector2(-r, -r)), c.clone().add(new THREE.Vector2(r, -r)), c.clone().add(new THREE.Vector2(r, r)), c.clone().add(new THREE.Vector2(-r, r))], h, h + 2.2, M.betonSombre); // édicule
 }
 function bunker(anneau, h) {
-  prisme(anneau, 0, h, [M.betonSombre, M.beton]);
+  prisme(anneau, 0, h, [M.betonSombre, M.alveoles]);
   tronc(anneau, h, h + 2.5, -1.2, M.betonSombre);                // dalle de toit débordante, épaisse
 }
 function halle(anneau, h) {
@@ -315,23 +326,32 @@ function serre(anneau, h) {
   prisme(anneau, 0.8, h, M.verre);
   tronc(anneau, h, h + 0.4, -0.2, M.blanc);
 }
-// la Cité du Vin : une tour aux courbes dorées qui s'affine et se penche vers la Garonne, comme du vin dans un verre
+// la Cité du Vin : des courbes dorées qui tournent sur elles-mêmes, comme le vin dans un verre qu'on fait tourner.
+// Empilement de tranches : le contour s'affine, pivote et se décale vers la Garonne en montant ; un léger renflement
+// à mi-hauteur arrondit la silhouette ; une tranche sur trois est vitrée, comme les bandeaux de verre du bâtiment.
 function citeDuVin(anneau, h) {
-  const c = centreDe(anneau), n = 14;
-  let bas = anneau;
+  const c = centreDe(anneau), n = 34, CORPS = 0.5; // la moitié basse : le corps arrondi ; au-dessus : la tour
+  const tranche = (t) => {
+    let f, dec;
+    if (t <= CORPS) { const u = t / CORPS; f = (1 + 0.1 * Math.sin(Math.PI * u)) * (1 - 0.32 * u * u); dec = new THREE.Vector2(3 * u * u, 1.2 * u * u); }
+    else { const u = (t - CORPS) / (1 - CORPS); f = 0.6 - 0.5 * Math.pow(u, 0.8); dec = new THREE.Vector2(3 + 16 * Math.pow(u, 0.9), 1.2 + 5 * Math.pow(u, 0.9)); } // vers la Garonne
+    const tour = 0.7 * t * t, cos = Math.cos(tour), sin = Math.sin(tour);
+    return anneau.map((p) => { const v = p.clone().sub(c).multiplyScalar(Math.max(f, 0.08)); return c.clone().add(dec).add(new THREE.Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos)); });
+  };
+  let bas = tranche(0);
   for (let i = 0; i < n; i++) {
-    const t = (i + 1) / n, f = 1 - 0.82 * Math.pow(t, 1.35), dec = new THREE.Vector2(9 * t * t, 4 * t * t);
-    const haut = anneau.map((p) => c.clone().add(dec).add(p.clone().sub(c).multiplyScalar(f)));
-    const z0 = (h * i) / n, z1 = (h * (i + 1)) / n, pos = [];
+    const t1 = (i + 1) / n, haut = tranche(t1), z0 = (h * i) / n, z1 = h * t1, pos = [];
     for (let k = 0; k < bas.length; k++) {
       const a = bas[k], b = bas[(k + 1) % bas.length], d = haut[(k + 1) % haut.length], e = haut[k];
       pos.push(a.x, a.y, z0, b.x, b.y, z0, d.x, d.y, z1, a.x, a.y, z0, d.x, d.y, z1, e.x, e.y, z1);
     }
-    if (i === n - 1) for (const [x, y, z] of THREE.ShapeUtils.triangulateShape(haut, [])) for (const p of [haut[x], haut[y], haut[z]]) pos.push(p.x, p.y, z1);
+    // le dessus du corps (terrasse) et le sommet de la tour
+    const capot = (r, z) => { for (const [x, y, w] of THREE.ShapeUtils.triangulateShape(r, [])) for (const p of [r[x], r[y], r[w]]) pos.push(p.x, p.y, z); };
+    if (i === n - 1) capot(haut, z1);
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
     g.computeVertexNormals();
-    ajouter(g, M.cite);
+    ajouter(g, i % 6 === 4 ? M.verreCite : M.cite);
     bas = haut;
   }
 }
@@ -349,7 +369,7 @@ export function coucheMonuments(D) {
       case 'bunker': bunker(r, b.h); break;
       case 'halle': halle(r, b.h); break;
       case 'serre': serre(r, b.h); break;
-      case 'cite': citeDuVin(r, Math.max(b.h, 50)); break;
+      case 'cite': citeDuVin(r, 55 / EXAG); break; // 55 m réels, sans exagération
       default: immeuble(r, b.h); // classique et gare
     }
   }

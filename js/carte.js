@@ -39,15 +39,14 @@ map.addControl(new maplibregl.AttributionControl({ compact: true, customAttribut
 
 map.on('load', () => {
   map.addImage('papier', papier());
-  for (const k of ['terre', 'eau', 'parcs', 'rues', 'fer', 'plats', 'halos']) map.addSource(k, { type: 'geojson', data: deplier(fond[k]) });
+  for (const k of ['terre', 'eau', 'profondeurs', 'parcs', 'rues', 'fer', 'plats', 'halos']) map.addSource(k, { type: 'geojson', data: deplier(fond[k]) });
   map.addSource('arbres', { type: 'geojson', data: points(fond.arbres) });
 
   // eau : hauts-fonds clairs le long des rives, puis lignes de profondeur
   map.addLayer({ id: 'hauts-fonds', type: 'line', source: 'eau', paint: { 'line-color': '#b3d6e3', 'line-width': decal(70), 'line-blur': decal(40) } });
-  [9, 20, 34, 52, 76].forEach((m, i) => {
-    for (const s of [1, -1]) map.addLayer({ id: `profondeur-${i}-${s}`, type: 'line', source: 'eau',
-      paint: { 'line-color': '#4f8fae', 'line-width': 1.2, 'line-opacity': 0.75 - i * 0.12, 'line-offset': decal(m * s) } });
-  });
+  // lignes de profondeur : courbes d'égale distance à la rive, calculées par scripts/carte.mjs
+  map.addLayer({ id: 'profondeurs', type: 'line', source: 'profondeurs', layout: { 'line-join': 'round' },
+    paint: { 'line-color': '#4f8fae', 'line-width': 1.2, 'line-opacity': ['-', 0.78, ['*', ['get', 'n'], 0.12]] } });
   // le papier, son liseré de rive, la verdure, les rues
   map.addLayer({ id: 'terre', type: 'fill', source: 'terre', paint: { 'fill-pattern': 'papier' } });
   map.addLayer({ id: 'rive-ombre', type: 'line', source: 'terre', paint: { 'line-color': 'rgba(60, 90, 100, .35)', 'line-width': 3, 'line-blur': 2, 'line-translate': [1.5, 1.5] } });
